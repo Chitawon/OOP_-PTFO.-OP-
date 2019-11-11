@@ -615,11 +615,98 @@
 									"model": {
 										"$ref": "AAAAAAFuRR87nFG0quA="
 									},
+									"subViews": [
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFuSxL/CaEaV9w=",
+											"_parent": {
+												"$ref": "AAAAAAFuRR87nVG9oso="
+											},
+											"model": {
+												"$ref": "AAAAAAFuSxL+3KEVYlE="
+											},
+											"font": "Arial;13;2",
+											"left": 701,
+											"top": 584,
+											"width": 223,
+											"height": 13,
+											"text": "+init(): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFuSxMay6HqaOs=",
+											"_parent": {
+												"$ref": "AAAAAAFuRR87nVG9oso="
+											},
+											"model": {
+												"$ref": "AAAAAAFuSxMaoqHlNoc="
+											},
+											"font": "Arial;13;2",
+											"left": 701,
+											"top": 599,
+											"width": 223,
+											"height": 13,
+											"text": "+draw(): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFuSxMxdKK9bTQ=",
+											"_parent": {
+												"$ref": "AAAAAAFuRR87nVG9oso="
+											},
+											"model": {
+												"$ref": "AAAAAAFuSxMxTKK2MUc="
+											},
+											"font": "Arial;13;2",
+											"left": 701,
+											"top": 614,
+											"width": 223,
+											"height": 13,
+											"text": "+update(float dt): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFuSxNU/qONpKY=",
+											"_parent": {
+												"$ref": "AAAAAAFuRR87nVG9oso="
+											},
+											"model": {
+												"$ref": "AAAAAAFuSxNU1KOIoWk="
+											},
+											"font": "Arial;13;2",
+											"left": 701,
+											"top": 629,
+											"width": 223,
+											"height": 13,
+											"text": "+handle(): void",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFuSxNu7aRdQVs=",
+											"_parent": {
+												"$ref": "AAAAAAFuRR87nVG9oso="
+											},
+											"model": {
+												"$ref": "AAAAAAFuSxNuxaRYlW0="
+											},
+											"font": "Arial;13;2",
+											"left": 701,
+											"top": 644,
+											"width": 223,
+											"height": 13,
+											"text": "+dispose(): void",
+											"horizontalAlignment": 0
+										}
+									],
 									"font": "Arial;13;0",
 									"left": 696,
 									"top": 579,
 									"width": 233,
-									"height": 10
+									"height": 83
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -4085,7 +4172,121 @@
 							}
 						}
 					],
-					"documentation": "ดูแลหน้าเกมที่จะแสดง"
+					"documentation": "ดูแลหน้าเกมที่จะแสดง",
+					"operations": [
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFuSxL+3KEVYlE=",
+							"_parent": {
+								"$ref": "AAAAAAFuRR87nFG0quA="
+							},
+							"name": "init",
+							"documentation": "โหลดรูป",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxL+3KEW4Vk=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxL+3KEVYlE="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							],
+							"isAbstract": true
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFuSxMaoqHlNoc=",
+							"_parent": {
+								"$ref": "AAAAAAFuRR87nFG0quA="
+							},
+							"name": "draw",
+							"documentation": "วาดรูป",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxMaoqHmt+U=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxMaoqHlNoc="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							],
+							"isAbstract": true
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFuSxMxTKK2MUc=",
+							"_parent": {
+								"$ref": "AAAAAAFuRR87nFG0quA="
+							},
+							"name": "update",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxMxTKK3QmU=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxMxTKK2MUc="
+									},
+									"type": "void",
+									"direction": "return"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxMxTKK4BAA=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxMxTKK2MUc="
+									},
+									"name": "float dt",
+									"type": ""
+								}
+							],
+							"isAbstract": true
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFuSxNU1KOIoWk=",
+							"_parent": {
+								"$ref": "AAAAAAFuRR87nFG0quA="
+							},
+							"name": "handle",
+							"documentation": "รับค่า input",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxNU1KOJ/UM=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxNU1KOIoWk="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							],
+							"isAbstract": true
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFuSxNuxaRYlW0=",
+							"_parent": {
+								"$ref": "AAAAAAFuRR87nFG0quA="
+							},
+							"name": "dispose",
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFuSxNuxaRZqHI=",
+									"_parent": {
+										"$ref": "AAAAAAFuSxNuxaRYlW0="
+									},
+									"type": "void",
+									"direction": "return"
+								}
+							],
+							"isAbstract": true
+						}
+					]
 				},
 				{
 					"_type": "UMLClass",
@@ -4416,7 +4617,8 @@
 								"$ref": "AAAAAAFuRTtfhFTmxFg="
 							},
 							"name": "GameStateManager gsm",
-							"visibility": "protected"
+							"visibility": "protected",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -4425,7 +4627,8 @@
 								"$ref": "AAAAAAFuRTtfhFTmxFg="
 							},
 							"name": "SpriteBatch batch",
-							"visibility": "protected"
+							"visibility": "protected",
+							"type": ""
 						}
 					],
 					"operations": [
@@ -4444,7 +4647,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFuSeZu6Fq6XGA="
 									},
-									"name": "GameStateManager gsm"
+									"name": "GameStateManager gsm",
+									"type": ""
 								}
 							]
 						},
@@ -4513,7 +4717,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFuSeapV11tElY="
 									},
-									"name": "float dt"
+									"name": "float dt",
+									"type": ""
 								}
 							],
 							"isAbstract": true

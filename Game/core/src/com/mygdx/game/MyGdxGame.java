@@ -25,9 +25,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
+		gsm.draw();
+		gsm.update(Gdx.graphics.getDeltaTime());
 		
+		Gdx.input.setInputProcessor(new InputManager());
 		
 		batch.end();
+		
 	}
 	
 	@Override
