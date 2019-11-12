@@ -2,39 +2,35 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.*;
-
+	
 
 public class GameStateManager {
+	private static State gameState;
 	
-	
-public GameStateManager() {
-		
-		setState(0);
+	public GameStateManager() {	
+			setState(0);
 	}
 
 
-public void setState(int state) {
-	
-	
-}
+	public void setState(int state) {
+		if (gameState != null) {
+			gameState.dispose();
+		}
+		if(state == 0) {
+			gameState = new StartState(this);
+		}
+		gameState.init();
+	}
 
-public void init() {
-	
-}
+	public void draw() {
+		gameState.draw();
+	}
 
-public void draw() {
-	
-}
+	public void update(float dt) {
+		gameState.update(dt);
+	}
 
-public void update(float dt) {
-	
-}
-
-public void handle() {
-	
-}
-
-public void dispose() {
-	
-}
+	public void dispose() {
+		gameState.dispose();
+	}
 }
