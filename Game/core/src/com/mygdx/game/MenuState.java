@@ -5,13 +5,12 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
 
-public class StartState extends State{
+public class MenuState extends State{
 	private SpriteBatch batch;
 	private Sprite logo, startButton;
 	private Texture bad;
-	private boolean check = false;
 	
-	public StartState(GameStateManager gsm) {
+	public MenuState(GameStateManager gsm) {
 		super(gsm);
 	}
 	
@@ -26,16 +25,8 @@ public class StartState extends State{
 	@Override
 	public void draw() {
 		batch.begin();
-		
-		if(check == true) {
-			startButton.setSize(1280, 720);
-			startButton.draw(batch);
-		}
-		logo.setSize(640, 360);
-		logo.draw(batch);
-		
-		
-		
+		startButton.setSize(1280, 720);
+		startButton.draw(batch);
 		batch.end();
 	}
 	
@@ -49,11 +40,9 @@ public class StartState extends State{
 	public void handle() {
 		int x = InputManager.getCursorX();
 		int y = InputManager.getCursorY();
-		if((x > 0) && (x < 360) && (y > 0) && (y < 6400)) {
-			if(InputManager.Isclick()) {
-				dispose();
-				gsm.setState(1);
-			}
+		if(InputManager.Isclick()) {
+			dispose();
+			gsm.setState(0);
 		}
 	}
 	

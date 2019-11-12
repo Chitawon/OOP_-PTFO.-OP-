@@ -16,8 +16,10 @@ public class GameStateManager {
 		if (gameState != null) {
 			gameState.dispose();
 		}
-		if(state == 0) {
+		if (state == 0) {
 			gameState = new StartState(this);
+		}else if (state == 1) {
+			gameState = new MenuState(this);
 		}
 		gameState.init();
 	}
