@@ -49,7 +49,7 @@ public class StartState extends State{
 	public void handle() {
 		int x = InputManager.getCursorX();
 		int y = InputManager.getCursorY();
-		if((x > 0) && (x < 360) && (y > 0) && (y < 6400)) {
+		if((x > 0) && (x < 360) && (y > 0) && (y < 640)) {
 			if(InputManager.Isclick()) {
 				dispose();
 				gsm.setState(1);
