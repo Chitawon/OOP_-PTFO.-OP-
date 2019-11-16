@@ -8,7 +8,7 @@ public class GameStateManager {
 	private static State gameState;
 	
 	public GameStateManager() {	
-			setState(0);
+			setState(0); // set ฉาก
 	}
 
 
@@ -17,9 +17,9 @@ public class GameStateManager {
 			gameState.dispose();
 		}
 		if (state == 0) {
-			gameState = new StartState(this);
+			gameState = new StartState(this); //หน้าเริ่ม
 		}else if (state == 1) {
-			gameState = new MenuState(this);
+			gameState = new MenuState(this); //เมนู
 		}
 		gameState.init();
 	}

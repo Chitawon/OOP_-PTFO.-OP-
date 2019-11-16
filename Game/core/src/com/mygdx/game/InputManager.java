@@ -6,15 +6,15 @@ import com.badlogic.gdx.InputAdapter;
 
 public class InputManager extends InputAdapter{
 	
-	public static boolean Isclick() {
+	public static boolean Isclick() { //เมื่อคลิก
 		return Gdx.input.isTouched();
 	}
 	
-	public static int getCursorX() {
+	public static int getCursorX() { //ส่งค่าแกน X เมาส์
 		return Gdx.input.getX();
 	}
 	
-	public static int getCursorY() {
+	public static int getCursorY() { //ส่งค่าแกน Y เมาส์
 		return Gdx.input.getY();
 	}
 	
