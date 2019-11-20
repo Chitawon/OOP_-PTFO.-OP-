@@ -1,63 +1,130 @@
 package com.mygdx.game;
-import java.awt.image.*;
-import javax.imageio.ImageIO;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.util.Random;
 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MyGdxGame implements ActionListener{
+public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	
-	Texture img,img2,img3,img4,img5,img6;
-	 private JFrame fr;
-	 private JButton btn1;
-	 private JTextField txt1;
-	 private JPanel p1,p2;
+	static int width, height;
+	SpriteBatch batch;
+	Texture img;
+	private int n,a = 0;
+	Sprite sprite;
 	
-	public MyGdxGame() throws IOException {
-		fr = new JFrame("game");
-        p1 = new JPanel();
-        p2 = new JPanel();
-		btn1 = new JButton("click");
-		txt1 = new JTextField("Dice");
-		BufferedImage image = ImageIO.read(new File("C:\\Users\\comnate\\Desktop\\dic/1.png"));
-		JLabel label = new JLabel(new ImageIcon(image));
-		btn1.addActionListener(this);
-		p1.setLayout(new GridLayout(2,1));
-		 p1.add(btn1);
-	     p1.add(txt1);
-	     p1.add(p2);
-	     p2.setLayout(new FlowLayout());
-	     p2.add(label);
-	     fr. getContentPane().add(p1);
-	     fr.setFont(new Font("TimesRoman",Font.BOLD,60));
-	        fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        fr.pack();     
-	        fr.setVisible(true);
+	@Override
+	public void create () {
+
+		width = Gdx.graphics.getWidth();
+		
+		height = Gdx.graphics.getHeight();
+		
+		batch = new SpriteBatch();
+		img = new Texture("random.png");
+		sprite = new Sprite(img);
+		sprite.setPosition(Gdx.graphics.getWidth()/2 - sprite.getWidth()/2, Gdx.graphics.getHeight()/2 - sprite.getHeight()/2);
 	}
-	public void actionPerformed(ActionEvent e) {
-        System.out.println("Press : " + e.getActionCommand());
-        if((e.getSource().equals(btn1))&&(txt1.getText().equals("   Dice"))){
-        	txt1.setText("Stop");
-        }else if((e.getSource().equals(btn1))&&(txt1.getText().equals("Stop"))){
-        	txt1.setText("Dice");
-        }
-    }
-	public static void main(String[] args) throws IOException {
-        new MyGdxGame();
-    }
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		 if (button == Input.Buttons.LEFT) {
+			 a = 1;
+           return true;     
+	      }
+		 a = 0; 
+	      return false;
+	   }		
 
+	@Override
+	public void render () {
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		batch.begin();
+	if(Gdx.input.isTouched()) {
+		onMouseDown();
+	}
+		sprite = new Sprite(img);
+		batch.draw(sprite, sprite.getX(), sprite.getY());
+		batch.end();
+	}
+	
+	
+	
+
+	
+	private void onMouseDown() {
+		Random rand = new Random();;
+		n = rand.nextInt(6);
+		n += 1;
+		if(n == 6) {
+		img = new Texture("d6.png");
+		sprite = new Sprite(img);
+		batch.draw(sprite, sprite.getX(), sprite.getY());}
+		else if(n == 1) {
+			img = new Texture("d1.png");
+			sprite = new Sprite(img);
+			batch.draw(sprite, sprite.getX(), sprite.getY());}
+	else if(n == 2) {
+		img = new Texture("d2.png");
+		sprite = new Sprite(img);
+		batch.draw(sprite, sprite.getX(), sprite.getY());}
+	else if(n == 3) {
+	img = new Texture("d3.png");
+	sprite = new Sprite(img);
+	batch.draw(sprite, sprite.getX(), sprite.getY());}
+	else if(n == 4) {
+    img = new Texture("d4.png");
+	sprite = new Sprite(img);
+	batch.draw(sprite, sprite.getX(), sprite.getY());}
+	else if(n == 5) {
+		img = new Texture("d5.png");
+	sprite = new Sprite(img);
+	batch.draw(sprite, sprite.getX(), sprite.getY());}
+    }
+	
+	@Override
+	public void dispose () {
+		batch.dispose();
+	}
+	@Override
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
