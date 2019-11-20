@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-	import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.*;
 
 public abstract class State {
 	protected GameStateManager gsm;

@@ -6,9 +6,14 @@ import com.badlogic.gdx.audio.*;
 
 public class GameStateManager {
 	private static State gameState;
+
+	public static final int START = 0;
+	public static final int MENU = 1;
+	public static final int PLAY = 2;
+	
 	
 	public GameStateManager() {	
-			setState(0); // set ฉาก
+			setState(START); // set ฉาก
 	}
 
 
@@ -16,10 +21,12 @@ public class GameStateManager {
 		if (gameState != null) {
 			gameState.dispose();
 		}
-		if (state == 0) {
-			gameState = new StartState(this); //หน้าเริ่ม
-		}else if (state == 1) {
+		if (state == START) {
+			gameState = new StartState(this);//หน้าเริ่ม
+		}else if (state == MENU) {
 			gameState = new MenuState(this); //เมนู
+		}else if (state == PLAY) {
+			gameState = new PlayState(this); //เมนู
 		}
 		gameState.init();
 	}

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 public class StartState extends State{
 	private SpriteBatch batch;
 	private Sprite startButton;
-	
+	public static boolean Change = false;
 	public StartState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -25,21 +25,19 @@ public class StartState extends State{
 		batch.begin();
 		startButton.setCenter(600, 300);
 		startButton.draw(batch);
-		
 		batch.end();
 	}
 	
 	@Override
 	public void update(float dt) {
 		handle();
-		
 	}
 	
 	@Override
 	public void handle() {
 		if(InputManager.Isclick()) {
 				dispose();
-				gsm.setState(1);
+				gsm.setState(GameStateManager.MENU);
 		}
 	}
 	
