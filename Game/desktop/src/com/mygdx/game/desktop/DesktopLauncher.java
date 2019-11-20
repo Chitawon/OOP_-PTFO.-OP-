@@ -9,7 +9,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 1312; //ความกว้างจอ
 		config.height = 752; //ความสูงจอ
-		config.resizable = false; //ไม่รีไซล์จอ
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

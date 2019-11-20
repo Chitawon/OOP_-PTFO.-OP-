@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
-public class MenuState extends State{
+public class TutorialState extends State{
 	private SpriteBatch batch;
 	private Sprite startButton, b1, b2;
 	
-	public MenuState(GameStateManager gsm) {
+	public TutorialState(GameStateManager gsm) {
 		super(gsm);
 	}
 	
@@ -49,8 +49,7 @@ public class MenuState extends State{
 			if((x >= startButton.getX() && x <= startButton.getX() + startButton.getWidth()) 
 				&& 
 		(y <= Gdx.graphics.getHeight() - startButton.getY() && y >= Gdx.graphics.getHeight() - startButton.getY() - startButton.getHeight())){
-				dispose();
-				gsm.setState(GameStateManager.PLAY);
+				
 			}
 		}
 	}

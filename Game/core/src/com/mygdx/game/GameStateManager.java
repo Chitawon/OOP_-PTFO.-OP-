@@ -10,10 +10,11 @@ public class GameStateManager {
 	public static final int START = 0;
 	public static final int MENU = 1;
 	public static final int PLAY = 2;
+	public static final int TUTORIAL = 3;
 	
 	
 	public GameStateManager() {	
-			setState(START); // set ฉาก
+			setState(START); // set ฉากหน้าเริ่ม
 	}
 
 
@@ -26,7 +27,9 @@ public class GameStateManager {
 		}else if (state == MENU) {
 			gameState = new MenuState(this); //เมนู
 		}else if (state == PLAY) {
-			gameState = new PlayState(this); //เมนู
+			gameState = new PlayState(this); //เล่น
+		}else if (state == TUTORIAL) {
+			gameState = new PlayState(this); //ฝึกเล่น
 		}
 		gameState.init();
 	}

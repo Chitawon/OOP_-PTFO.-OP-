@@ -38,7 +38,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		gsm.draw();
 		gsm.update(Gdx.graphics.getDeltaTime());
-		Gdx.input.setInputProcessor(new InputManager());//เปลี่ยนรับ Inputที่ InputManager ที่เราสร้างขึ้น
+		Gdx.input.setInputProcessor(new InputManager());//เปลี่ยนรับ Input ที่ InputManager ที่เราสร้างขึ้น
 		
 		batch.end();
 		

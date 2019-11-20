@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class PlayState extends State{
 	private SpriteBatch batch;
-	private Sprite player, startButton, b1, b2;
-	private Texture bad;
-	private Random random; 
-	private int num = 0, che = 0, pos = 0;
+	private Texture icon, skill_1, skill_2, bag, dn, d1, d2, d3, d4, d5, d6, teri;
+	private Sprite dice, player;
+	private Random random;
+	private Map_1 map1;
+	private int num = 0, pos = 1, p_x = 0, p_y = 0;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -21,44 +22,39 @@ public class PlayState extends State{
 	public void init() {
 		random = new Random();
 		batch = new SpriteBatch();
-		player = new Sprite(new Texture(Gdx.files.internal("M1985.png"))); //set Sprite เป็นรูป
-		startButton = new Sprite(new Texture(Gdx.files.internal("Untitled.png"))); //set Sprite เป็นรูป
-		b1 = new Sprite(new Texture(Gdx.files.internal("Untitled.png"))); //set Sprite เป็นรูป
-		b2 = new Sprite(new Texture(Gdx.files.internal("Untitled.png"))); //set Sprite เป็นรูป
-		bad = new Texture(Gdx.files.internal("Untitled.png"));
-		
-	}
+		dice = new Sprite(new Texture(Gdx.files.internal("random.png")));
+		player = new Sprite(new Texture(Gdx.files.internal("player.png"))); //set Sprite เป็นรูป
+		icon = new Texture("player_icon.png");
+		skill_1 = new Texture("player_skill_1.png");
+		skill_2 = new Texture("player_skill_2_1.png");
+		bag = new Texture("backpack.png");
+		d1 = new Texture("d1.png");
+		d2 = new Texture("d2.png");
+		d3 = new Texture("d3.png");
+		d4 = new Texture("d4.png");
+		d5 = new Texture("d5.png");
+		d6 = new Texture("d6.png");
+		map1 = new Map_1();
+		map1.init();
+		p_x = map1.PositionX(pos);
+		p_y = map1.PositionY(pos);
+}
 	
 	@Override
 	public void draw() {
-		batch.begin();
-		startButton.setSize(300, 100);//set ขนาด
-		b1.setSize(144, 100); //set ขนาด
-		b2.setSize(144, 100); //set ขนาด
-		b1.setCenter(440, 360); //set ภาพตรงกลางจุดที่กำหนด
-		b2.setCenter(840, 360); //set ภาพตรงกลางจุดที่กำหนด
-		startButton.setCenter(640, 260); //set ภาพตรงกลางจุดที่กำหนด
-		player.setPosition(b1.getX(), b1.getY()); //set ภาพตรงจุดที่กำหนด
-		if(pos == 0) {
-			player.setPosition(b1.getX(), b1.getY()); //ถ้า num = 0 อยู่ b2
-		}else if (pos == 1) {
-			player.setPosition(b2.getX(), b2.getY()); //ถ้า num = 0 อยู่ b1
-		}else if (pos == 2) {
-			player.setPosition(b2.getX() + 100, b2.getY()); //ถ้า num = 0 อยู่ b1
-		}else if (pos == 3) {
-			player.setPosition(b2.getX() + 100, b2.getY() + 100); //ถ้า num = 0 อยู่ b1
-		}else if (pos == 4) {
-			player.setPosition(b1.getX() - 100, b1.getY()); //ถ้า num = 0 อยู่ b1
-		}else if (pos == 5) {
-			player.setPosition(b1.getX() - 100, b1.getY() - 100); //ถ้า num = 0 อยู่ b1
+		if(true) {
+			map1.draw();
 		}
-		batch.draw(bad, b2.getX() + 100, b2.getY(), 96, 96);
-		batch.draw(bad, b2.getX() + 100, b2.getY() + 100, 96, 96);
-		batch.draw(bad, b1.getX() - 100, b1.getY(), 96, 96);
-		batch.draw(bad, b1.getX() - 100, b1.getY() - 100, 96, 96);
-		b1.draw(batch);
-		b2.draw(batch);
-		startButton.draw(batch);
+		/* UI */
+		batch.begin();
+		batch.draw(icon, 32, 16, 160, 192);
+		batch.draw(skill_1, 244, 16, 96, 96);
+		batch.draw(bag, 384, 16, 96, 96);
+		dice.setPosition(512, 16);
+		dice.setSize(96, 96);
+		dice.draw(batch);
+		player.setPosition(p_x, p_y);
+		player.setSize(84, 100);
 		player.draw(batch);
 		batch.end();
 	}
@@ -72,18 +68,17 @@ public class PlayState extends State{
 	public void handle() {
 		int x = InputManager.getCursorX();
 		int y = InputManager.getCursorY();
-		if((x >= startButton.getX() && x <= startButton.getX() + startButton.getWidth()) 
+		if((x >= dice.getX() && x <= dice.getX() + dice.getWidth()) 
 				&& 
-		(y <= Gdx.graphics.getHeight() - startButton.getY() && y >= Gdx.graphics.getHeight() - startButton.getY() - startButton.getHeight())){
-			if(InputManager.Isclick() && che == 0) {
-				num = random.nextInt(6); // random เลข
+		(y <= Gdx.graphics.getHeight() - dice.getY() && y >= Gdx.graphics.getHeight() - dice.getY() - dice.getHeight())){
+			if(InputManager.Isclick()) {
+				num = random.nextInt(6) + 1; // random เลข
 				pos += num;
+				p_x = map1.PositionX(pos);
+				p_y = map1.PositionY(pos);
 			}
 		}
-		if(pos > 6) {
-			pos = 0;
-		}
-	}
+}
 	
 	@Override
 	public void dispose() {
