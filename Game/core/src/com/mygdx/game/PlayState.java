@@ -12,7 +12,8 @@ public class PlayState extends State{
 	private Sprite dice, player;
 	private Random random;
 	private Map_1 map1;
-	private int num = 0, pos = 1, p_x = 0, p_y = 0;
+	private int num = 0, pos = 1;
+	private int[] Position_player;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -20,6 +21,7 @@ public class PlayState extends State{
 	
 	@Override
 	public void init() {
+		Position_player = new int[2];
 		random = new Random();
 		batch = new SpriteBatch();
 		dice = new Sprite(new Texture(Gdx.files.internal("random.png")));
@@ -36,8 +38,7 @@ public class PlayState extends State{
 		d6 = new Texture("d6.png");
 		map1 = new Map_1();
 		map1.init();
-		p_x = map1.PositionX(pos);
-		p_y = map1.PositionY(pos);
+		Position_player = map1.Position(pos);
 }
 	
 	@Override
@@ -53,7 +54,7 @@ public class PlayState extends State{
 		dice.setPosition(512, 16);
 		dice.setSize(96, 96);
 		dice.draw(batch);
-		player.setPosition(p_x, p_y);
+		player.setPosition(Position_player[0], Position_player[1]);
 		player.setSize(84, 100);
 		player.draw(batch);
 		batch.end();
@@ -72,10 +73,12 @@ public class PlayState extends State{
 				&& 
 		(y <= Gdx.graphics.getHeight() - dice.getY() && y >= Gdx.graphics.getHeight() - dice.getY() - dice.getHeight())){
 			if(InputManager.Isclick()) {
-				num = random.nextInt(6) + 1; // random เลข
+				num = random.nextInt(4) + 1; // random เลข
 				pos += num;
-				p_x = map1.PositionX(pos);
-				p_y = map1.PositionY(pos);
+				if(pos > 47) {
+					pos = 47;
+				}
+				Position_player = map1.Position(pos);
 			}
 		}
 }

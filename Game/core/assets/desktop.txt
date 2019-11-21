@@ -192,11 +192,11 @@ public class MyGdxGame extends ApplicationAdapter {
 //		batch.draw(img, 320, 624, 96, 96); // 8
 //		
 //		
-//		batch.draw(img, 416, 240, 96, 96); // 9
-//		batch.draw(img, 416, 336, 96, 96); // 10
+//		batch.draw(img, 416, 240, 96, 96); // 13
+//		batch.draw(img, 416, 336, 96, 96); // 12
 //		batch.draw(img, 416, 432, 96, 96); // 11
-//		batch.draw(img, 416, 528, 96, 96); // 12
-//		batch.draw(img, 416, 624, 96, 96); // 13
+//		batch.draw(img, 416, 528, 96, 96); // 10
+//		batch.draw(img, 416, 624, 96, 96); // 9
 //		
 //		batch.draw(img, 512, 432, 96, 96); // 19
 //		
@@ -220,16 +220,16 @@ public class MyGdxGame extends ApplicationAdapter {
 //		batch.draw(img, 992, 624, 96, 96); // 26
 //		batch.draw(img, 992, 48, 96, 96); // 36
 //		
-//		batch.draw(img, 1088, 624, 96, 96); // 40
+//		batch.draw(img, 1088, 624, 96, 96); // 27
 //		batch.draw(img, 1088, 48, 96, 96); // 35
 //		
-//		batch.draw(img, 1184, 48, 96, 96); // 28
-//		batch.draw(img, 1184, 144, 96, 96); // 29
-//		batch.draw(img, 1184, 240, 96, 96); // 30
+//		batch.draw(img, 1184, 48, 96, 96); // 34
+//		batch.draw(img, 1184, 144, 96, 96); // 33
+//		batch.draw(img, 1184, 240, 96, 96); // 32
 //		batch.draw(img, 1184, 336, 96, 96); // 31
-//		batch.draw(img, 1184, 432, 96, 96); // 32
-//		batch.draw(img, 1184, 528, 96, 96); // 33
-//		batch.draw(img, 1184, 624, 96, 96); // 34
+//		batch.draw(img, 1184, 432, 96, 96); // 30
+//		batch.draw(img, 1184, 528, 96, 96); // 29
+//		batch.draw(img, 1184, 624, 96, 96); // 28
 //		
 //		/* BOSS CENTER*/
 //		batch.draw(img, 864, 496, 96, 96); // 44
