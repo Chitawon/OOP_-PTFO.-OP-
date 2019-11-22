@@ -13,13 +13,16 @@ public class PlayState extends State{
 	private Random random;
 	private Map Map;
 	private int num = 0, pos = 1, current_Map;
+	private int Event = 0; // 0 = ไม่มี 1=สู้
 	private int[] Position_player;
 	private float DELAY;
 	
 	public static int Current_Status = 0;
 	
 	public static int Status_PlayerTurn = 0;
-	public static int Status_PlayerMoving = 1;
+	public static int Status_DiceRoll = 1;
+	public static int Status_PlayerMoving = 2;
+	public static int Status_CheckEvent = 3;
 //	public static int Status_Fighting = 2;
 //	public static int Status_ = 3;
 //	public static int Status_ = 4;
@@ -81,13 +84,27 @@ public class PlayState extends State{
 	
 	@Override
 	public void update(float dt) {
-		if(Current_Status ==) {
+		handle();
+		if(Current_Status == Status_DiceRoll || Current_Status == Status_PlayerMoving || Current_Status == Status_CheckEvent) {
 			DELAY -= dt;
 		}
 		if(DELAY <= 0) {
 			DELAY = 0;
 		}
-		handle();
+		if(Current_Status == Status_DiceRoll && DELAY <= 0) {
+			setDice(num);
+			Current_Status = Status_PlayerMoving;
+			DELAY = 3;
+		}
+		if(Current_Status == Status_PlayerMoving && DELAY <= 0) {
+			setPosition();
+			Current_Status = Status_CheckEvent;
+			DELAY = 3;
+		}
+		if(Current_Status == Status_CheckEvent && DELAY <= 0 && Event == 0) {
+			Current_Status = Status_PlayerTurn;
+			setDice(0);
+		}
 	}
 	
 	@Override
@@ -99,10 +116,9 @@ public class PlayState extends State{
 		(CursorY <= Gdx.graphics.getHeight() - dice.getY() && CursorY >= Gdx.graphics.getHeight() - dice.getY() - dice.getHeight())){
 			if(InputManager.Isclick() && Current_Status == Status_PlayerTurn) {
 				num = random.nextInt(4) + 1; // random เลข
-				setDice(num);
 				pos += num;
-				Current_Status = Status_PlayerMoving;
-				DELAY = 1;
+				Current_Status = Status_DiceRoll;
+				DELAY = 3;
 				if(pos > 47 && current_Map == MAP_1) {
 					pos = 47;
 				}
@@ -111,7 +127,6 @@ public class PlayState extends State{
 //				}else if(pos > 51 && current_Map == MAP_3) {
 //					pos = 51;
 //				}
-				Position_player = Map.Position(pos);
 			}
 		}
 }
@@ -134,15 +149,22 @@ public class PlayState extends State{
 		Map.init();
 	}
 	
+	
 	public void setDice(int dice_num) {
-		if(dice_num == 1) {
-			
+		if(dice_num == 0) {
+			dice.setTexture(dn);
+		}else if(dice_num == 1) {
+			dice.setTexture(d1);
 		}else if(dice_num == 2) {
-
+			dice.setTexture(d2);
 		}else if(dice_num == 3) {
-
+			dice.setTexture(d3);
 		}else if(dice_num == 4) {
-
+			dice.setTexture(d4);
 		}
+	}
+	
+	public void setPosition() {
+		Position_player = Map.Position(pos);
 	}
 }
