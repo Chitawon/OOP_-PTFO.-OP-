@@ -4,25 +4,25 @@ import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
+public class MyGdxGame extends ApplicationAdapter {
 	
 	static int width, height;
 	SpriteBatch batch;
 	Texture img;
-	private int n,a = 0;
+	private int n;
 	Sprite sprite;
+	
+	OrthographicCamera cam;
 	
 	@Override
 	public void create () {
-
+		
 		width = Gdx.graphics.getWidth();
 		
 		height = Gdx.graphics.getHeight();
@@ -31,33 +31,29 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 		img = new Texture("random.png");
 		sprite = new Sprite(img);
 		sprite.setPosition(Gdx.graphics.getWidth()/2 - sprite.getWidth()/2, Gdx.graphics.getHeight()/2 - sprite.getHeight()/2);
+		cam = new OrthographicCamera(width, height);
+		cam.translate(width / 2, height/2);
+		cam.update();
 	}
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		 if (button == Input.Buttons.LEFT) {
-			 a = 1;
-           return true;     
-	      }
-		 a = 0; 
-	      return false;
-	   }		
 
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
 		batch.begin();
-	if(Gdx.input.isTouched()) {
-		onMouseDown();
-	}
+		Gdx.input.setInputProcessor(new InputManager());
+		int x = InputManager.getCursorX();
+		int y = InputManager.getCursorY();
+		if(Gdx.input.isTouched()) {
+			if(x > 20&&y > 20) {
+			onMouseDown();}
+		}
 		sprite = new Sprite(img);
 		batch.draw(sprite, sprite.getX(), sprite.getY());
+		Gdx.input.setInputProcessor(new InputManager());
 		batch.end();
 	}
-	
-	
-	
-
-	
 	private void onMouseDown() {
 		Random rand = new Random();;
 		n = rand.nextInt(6);
@@ -91,40 +87,5 @@ public class MyGdxGame extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public void dispose () {
 		batch.dispose();
-	}
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
