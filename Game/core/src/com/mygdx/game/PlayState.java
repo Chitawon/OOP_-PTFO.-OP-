@@ -8,15 +8,35 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class PlayState extends State{
 	private SpriteBatch batch;
-	private Texture icon, skill_1, skill_2, bag, dn, d1, d2, d3, d4, d5, d6, teri;
+	private Texture icon, skill_1, skill_2, bag, dn, d1, d2, d3, d4, d5, d6;
 	private Sprite dice, player;
 	private Random random;
-	private Map_1 map1;
-	private int num = 0, pos = 1;
+	private Map Map;
+	private int num = 0, pos = 1, current_Map;
 	private int[] Position_player;
+	private float DELAY;
+	
+	public static int Current_Status = 0;
+	
+	public static int Status_PlayerTurn = 0;
+	public static int Status_PlayerMoving = 1;
+//	public static int Status_Fighting = 2;
+//	public static int Status_ = 3;
+//	public static int Status_ = 4;
+//	public static int Status_ = 5;
+//	public static int Status_ = 6;
+//	public static int Status_ = 7;
+//	public static int Status_ = 8;
+//	public static int Status_ = 9;
+	
+	public static final int MAP_1 = 1;
+	public static final int MAP_2 = 2;
+	public static final int MAP_3 = 3;
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
+		setMap(MAP_1);
+		current_Map = MAP_1;
 	}
 	
 	@Override
@@ -30,24 +50,23 @@ public class PlayState extends State{
 		skill_1 = new Texture("player_skill_1.png");
 		skill_2 = new Texture("player_skill_2_1.png");
 		bag = new Texture("backpack.png");
+		dn = new Texture("random.png");
 		d1 = new Texture("d1.png");
 		d2 = new Texture("d2.png");
 		d3 = new Texture("d3.png");
 		d4 = new Texture("d4.png");
 		d5 = new Texture("d5.png");
 		d6 = new Texture("d6.png");
-		map1 = new Map_1();
-		map1.init();
-		Position_player = map1.Position(pos);
+		Position_player = Map.Position(pos);
 }
 	
 	@Override
 	public void draw() {
-		if(true) {
-			map1.draw();
-		}
-		/* UI */
 		batch.begin();
+		/* Map */
+		Map.draw(batch);
+
+		/* UI */
 		batch.draw(icon, 32, 16, 160, 192);
 		batch.draw(skill_1, 244, 16, 96, 96);
 		batch.draw(bag, 384, 16, 96, 96);
@@ -62,23 +81,37 @@ public class PlayState extends State{
 	
 	@Override
 	public void update(float dt) {
+		if(Current_Status ==) {
+			DELAY -= dt;
+		}
+		if(DELAY <= 0) {
+			DELAY = 0;
+		}
 		handle();
 	}
 	
 	@Override
 	public void handle() {
-		int x = InputManager.getCursorX();
-		int y = InputManager.getCursorY();
-		if((x >= dice.getX() && x <= dice.getX() + dice.getWidth()) 
+		int CursorX = InputManager.getCursorX();
+		int CursorY = InputManager.getCursorY();
+		if((CursorX >= dice.getX() && CursorX <= dice.getX() + dice.getWidth()) 
 				&& 
-		(y <= Gdx.graphics.getHeight() - dice.getY() && y >= Gdx.graphics.getHeight() - dice.getY() - dice.getHeight())){
-			if(InputManager.Isclick()) {
+		(CursorY <= Gdx.graphics.getHeight() - dice.getY() && CursorY >= Gdx.graphics.getHeight() - dice.getY() - dice.getHeight())){
+			if(InputManager.Isclick() && Current_Status == Status_PlayerTurn) {
 				num = random.nextInt(4) + 1; // random เลข
+				setDice(num);
 				pos += num;
-				if(pos > 47) {
+				Current_Status = Status_PlayerMoving;
+				DELAY = 1;
+				if(pos > 47 && current_Map == MAP_1) {
 					pos = 47;
 				}
-				Position_player = map1.Position(pos);
+//				else if(pos > 45 && current_Map == MAP_2) {
+//					pos = 45;
+//				}else if(pos > 51 && current_Map == MAP_3) {
+//					pos = 51;
+//				}
+				Position_player = Map.Position(pos);
 			}
 		}
 }
@@ -88,5 +121,28 @@ public class PlayState extends State{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void setMap(int map) {
+		if(map == MAP_1) {
+			Map = new Map_1();
+		}else if(map == MAP_2) {
+			Map = new Map_2();
+		}else if(map == MAP_3) {
+			Map = new Map_3();
+		}
+		current_Map = map;
+		Map.init();
+	}
+	
+	public void setDice(int dice_num) {
+		if(dice_num == 1) {
+			
+		}else if(dice_num == 2) {
 
+		}else if(dice_num == 3) {
+
+		}else if(dice_num == 4) {
+
+		}
+	}
 }

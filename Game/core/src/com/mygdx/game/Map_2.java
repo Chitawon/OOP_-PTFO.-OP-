@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_2 extends Map{
-	private SpriteBatch batch;
 	private Texture img;
 	private int[] Position;
 	
 	public void init() {
 		Position = new int[2];
-		batch = new SpriteBatch();
 		img = new Texture("BG1.png");
 	}
 
@@ -20,8 +18,7 @@ public class Map_2 extends Map{
 		Position[1] = pos_y;
 	}
 
-	public void draw() {
-		batch.begin();
+	public void draw(SpriteBatch batch) {
 		batch.draw(img, 32, 624, 96, 96); // 1
 		batch.draw(img, 32, 528, 96, 96); // 2
 		batch.draw(img, 32, 432, 96, 96); // 3
@@ -79,7 +76,6 @@ public class Map_2 extends Map{
 		batch.draw(img, 1184, 432, 96, 96); // 43
 		batch.draw(img, 1184, 528, 96, 96); // 44
 		batch.draw(img, 1184, 624, 96, 96); // 45
-		batch.end();
 	}
 
 	public int[] Position(int pos) {

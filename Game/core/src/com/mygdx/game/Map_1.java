@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_1 extends Map{
 	private SpriteBatch batch;
-	private Texture img;
+	private Texture img, bg;
 	private int[] Position;
 	
 	public void init() {
 		Position = new int[2];
-		batch = new SpriteBatch();
 		img = new Texture("BG1.png");
+		bg = new Texture("Background/Background_Map1.jpg");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -20,8 +20,8 @@ public class Map_1 extends Map{
 		Position[1] = pos_y;
 	}
 
-	public void draw() {
-		batch.begin();
+	public void draw(SpriteBatch batch) {
+		batch.draw(bg, 0, 0, 1312, 752);
 		batch.draw(img, 32, 240, 96, 96); // 1
 		batch.draw(img, 32, 336, 96, 96); // 2
 		batch.draw(img, 32, 432, 96, 96); // 3
@@ -81,7 +81,6 @@ public class Map_1 extends Map{
 		batch.draw(img, 1184, 240, 96, 96); // 45
 		batch.draw(img, 1184, 144, 96, 96); // 46
 		batch.draw(img, 1184, 48, 96, 96); // 47
-		batch.end();
 	}
 
 	public int[] Position(int pos) {
