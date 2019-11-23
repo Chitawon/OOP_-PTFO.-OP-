@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_2 extends Map{
 	private Texture img;
+	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
 	
 	public void init() {
@@ -19,6 +20,10 @@ public class Map_2 extends Map{
 	}
 
 	public void draw(SpriteBatch batch) {
+		
+		batch.draw(img, 544, 624, 96, 96); // bear
+		batch.draw(img, 640, 624, 96, 96); // bear
+		
 		batch.draw(img, 32, 624, 96, 96); // 1
 		batch.draw(img, 32, 528, 96, 96); // 2
 		batch.draw(img, 32, 432, 96, 96); // 3

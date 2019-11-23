@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.g2d.*;
 public class Map_1 extends Map{
 	private SpriteBatch batch;
 	private Texture img, bg;
+	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
 	
 	public void init() {
 		Position = new int[2];
 		img = new Texture("BG1.png");
 		bg = new Texture("Background/Background_Map1.jpg");
+		enemy_board_r = new Texture("Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Board/enemy_board_l.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
