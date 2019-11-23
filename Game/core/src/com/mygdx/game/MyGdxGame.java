@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGdxGame extends ApplicationAdapter {
 	
 	static int width, height;
+	TileMap g; //TileMap
 	GameStateManager gsm; //สร้างเกม GameStateManager(เปลี่ยนฉาก)
 	SpriteBatch batch;
 	
@@ -22,6 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		height = Gdx.graphics.getHeight();
 		
 		gsm = new GameStateManager();
+		g = new TileMap();
 		
 		batch = new SpriteBatch();
 
@@ -39,6 +41,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		gsm.draw();
 		gsm.update(Gdx.graphics.getDeltaTime());
 		Gdx.input.setInputProcessor(new InputManager());//เปลี่ยนรับ Input ที่ InputManager ที่เราสร้างขึ้น
+		
+		g.create();
+		g.render();
+		g.setScreen(new play());
 		
 		batch.end();
 		
