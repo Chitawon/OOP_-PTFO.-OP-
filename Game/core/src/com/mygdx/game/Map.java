@@ -12,6 +12,4 @@ public abstract class Map {
 	
 	public abstract int[] Position(int pos);
 	
-	public abstract void dispose();
-	
 }

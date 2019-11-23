@@ -6,11 +6,15 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_3 extends Map{
 	private Texture img;
+	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
+	private int Player_Position;
 	
 	public void init() {
 		Position = new int[2];
 		img = new Texture("BG1.png");
+		enemy_board_r = new Texture("Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Board/enemy_board_l.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -247,9 +251,5 @@ public class Map_3 extends Map{
 			setPosition(864, 400);
 			return Position;
 		}
-	}
-
-	public void dispose() {
-		img.dispose();
 	}
 }

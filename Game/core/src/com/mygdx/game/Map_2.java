@@ -5,13 +5,17 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_2 extends Map{
-	private Texture img;
+	private Texture img, bg;
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
+	private int Player_Position;
 	
 	public void init() {
 		Position = new int[2];
 		img = new Texture("BG1.png");
+		bg = new Texture("Board/BG1.png");
+		enemy_board_r = new Texture("Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Board/enemy_board_l.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -20,7 +24,7 @@ public class Map_2 extends Map{
 	}
 
 	public void draw(SpriteBatch batch) {
-		
+		batch.draw(bg, 0, 0, 1312, 752);
 		batch.draw(img, 544, 624, 96, 96); // bear
 		batch.draw(img, 640, 624, 96, 96); // bear
 		
@@ -223,9 +227,5 @@ public class Map_2 extends Map{
 			setPosition(1184, 624);
 			return Position;
 		}
-	}
-
-	public void dispose() {
-		img.dispose();
 	}
 }

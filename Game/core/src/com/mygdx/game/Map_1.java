@@ -1,19 +1,18 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_1 extends Map{
-	private SpriteBatch batch;
 	private Texture img, bg;
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
+	private int Player_Position;
 	
 	public void init() {
 		Position = new int[2];
 		img = new Texture("BG1.png");
-		bg = new Texture("Background/Background_Map1.jpg");
+		bg = new Texture("Board/BG1.png");
 		enemy_board_r = new Texture("Board/enemy_board_r.png");
 		enemy_board_l = new Texture("Board/enemy_board_l.png");
 	}
@@ -84,9 +83,41 @@ public class Map_1 extends Map{
 		batch.draw(img, 1184, 240, 96, 96); // 45
 		batch.draw(img, 1184, 144, 96, 96); // 46
 		batch.draw(img, 1184, 48, 96, 96); // 47
+		
+		if(Player_Position <= 5) {
+			batch.draw(enemy_board_r, 32, 624, 96, 128);
+		}
+		if(Player_Position <= 16) {
+			batch.draw(enemy_board_r, 416, 528, 96, 128);
+		}
+		if(Player_Position <= 27) {
+			batch.draw(enemy_board_r, 608, 240, 96, 128);
+		}
+		if(Player_Position <= 37) {
+			batch.draw(enemy_board_r, 992, 432, 96, 128);
+		}
+		if(Player_Position <= 8) {
+			batch.draw(enemy_board_l, 224, 528, 96, 128);
+		}
+		if(Player_Position <= 12) {
+			batch.draw(enemy_board_l, 320, 240, 96, 128);
+		}
+		if(Player_Position <= 22) {
+			batch.draw(enemy_board_l, 800, 528, 96, 128);
+		}
+		if(Player_Position <= 33) {
+			batch.draw(enemy_board_l, 922, 48, 96, 128);
+		}
+		if(Player_Position <= 41) {
+			batch.draw(enemy_board_l, 1184, 624, 96, 128);
+		}
+		if(Player_Position <= 46) {
+			batch.draw(enemy_board_l, 1184, 144, 96, 128);
+		}
 	}
 
 	public int[] Position(int pos) {
+		Player_Position = pos;
 		if(pos == 1) {
 			setPosition(32, 240);
 			return Position;
@@ -232,9 +263,5 @@ public class Map_1 extends Map{
 			setPosition(1184, 48);
 			return Position;
 		}
-	}
-
-	public void dispose() {
-		img.dispose();
 	}
 }

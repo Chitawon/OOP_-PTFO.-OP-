@@ -60,7 +60,6 @@ public class PlayState extends State{
 		player = new Sprite(new Texture(Gdx.files.internal("Board/player_board.png"))); //set Sprite เป็นรูป
 		icon = new Texture("UI/player_icon.png");
 		skill_1 = new Texture("player_skill_1.png");
-		skill_2 = new Texture("player_skill_2_1.png");
 		bag = new Texture("UI/BP.png");
 		dn = new Texture("UI/dice_walk.png");
 		d1 = new Texture("UI/d1.png");
@@ -131,13 +130,13 @@ public class PlayState extends State{
 		
 		if(Current_Status == Status_CheckEvent) {
 			if(pos == 47 && current_Map == MAP_1) {
-				Event = 3;
+				Event = 0;
 				setMap(MAP_2);
 				num = 0;
 				pos = 1;
 				setPosition();
 			}else if(pos == 45 && current_Map == MAP_2) {
-				Event = 3;
+				Event = 0;
 				setMap(MAP_3);
 				num = 0;
 				pos = 1;
@@ -153,7 +152,10 @@ public class PlayState extends State{
 				setCutScene_group(Scene_group_3);
 			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 2) {
 				Event = 2;
-				setCutScene_group(Scene_group_3);
+				setCutScene_group(Scene_group_4);
+			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 3) {
+				Event = 2;
+				setCutScene_group(Scene_group_5);
 			}
 		}
 		
@@ -173,9 +175,6 @@ public class PlayState extends State{
 				setDice(0);
 			}else if(Event == 2) {
 				Current_Status = Status_CutScene;
-				setDice(0);
-			}else if(Event == 3) {
-				Current_Status = Status_PlayerTurn;
 				setDice(0);
 			}
 		}
@@ -210,9 +209,9 @@ public class PlayState extends State{
 					if (current_Map == MAP_3 && pos == 51 && boss_event == 0) {
 						Current_Status = Status_Fighting_PlayerTurn;
 						boss_event = 1;
-					}else if (current_Map == MAP_3 && pos == 51 && (boss_event == 2 || boss_event == 3)) {
-						Current_Status = Status_Fighting_PlayerTurn;
+						Event = 1;
 					}else {
+						Event = 0;
 						Current_Status = Status_PlayerTurn;
 					}
 				}
