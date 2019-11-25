@@ -11,7 +11,7 @@ public class Calico extends Character{
 	private Texture skill_1_atk, skill_2_atk, skill_3_atk, skill_4_atk, skill_5_atk;
 	private Texture skill_1_def, skill_2_def, skill_3_def, skill_4_def, skill_5_def;
 	private Sprite dice_combat, skill_combat;
-	private int HP, ATK;
+	private int HP = 50;
 	
 	private int[] Position_player;
 	private Sprite player_field, player_combat;
@@ -77,7 +77,10 @@ public class Calico extends Character{
 
 	@Override
 	public void drawCombat(SpriteBatch batch) {
-		batch.draw(dice_combat, 128, 400);
+		skill_combat.setPosition(128, 240);
+		skill_combat.draw(batch);
+		dice_combat.setPosition(128, 400);
+		dice_combat.draw(batch);
 		batch.draw(skill_combat, 128, 240);
 		player_combat.setPosition(384, 272);
 		player_combat.setSize(84, 100);
@@ -85,14 +88,9 @@ public class Calico extends Character{
 	}
 
 	@Override
-	public void setHP(int dmg) {
+	public void TakeDMG(int dmg) {
 		this.HP -= dmg;
-	}
-
-	@Override
-	public int getATK() {
-		// TODO Auto-generated method stub
-		return this.ATK;
+		Gdx.app.log("log","Player = " + HP);
 	}
 
 	@Override

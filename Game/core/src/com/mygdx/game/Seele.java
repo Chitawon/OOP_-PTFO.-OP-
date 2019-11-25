@@ -49,15 +49,10 @@ public class Seele extends Character{
 	}
 
 	@Override
-	public void setHP(int dmg) {
+	public void TakeDMG(int dmg) {
 		// TODO Auto-generated method stub
 		this.HP -= dmg;
-	}
-
-	@Override
-	public int getATK() {
-		// TODO Auto-generated method stub
-		return this.ATK;
+		Gdx.app.log("log", HP + "");
 	}
 
 	@Override

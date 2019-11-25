@@ -153,6 +153,62 @@ public class PlayState extends State{
 		}
 		
 		
+		//Fighting_Turn % 2 != 0 เทริน player
+		//Fighting_Turn % 2 == 0 เทริน enemy
+		
+		if(Current_Status == Status_Fighting) {
+			if((Fighting_Turn % 2 != 0) && (num_player == 0)) {
+				Calico.setDice_atk(num_player);
+			}else if((Fighting_Turn % 2 == 0) && (num_player == 0)){
+				Calico.setDice_def(num_player);
+			}else if((Fighting_Turn % 2 != 0) && (num_player != 0)){
+				Calico.setDice_atk(num_player);
+			}else if((Fighting_Turn % 2 == 0) && (num_player != 0)){
+				Calico.setDice_def(num_player);
+			}
+			
+			if((Fighting_Turn % 2 == 0) && (num_enemy == 0)) {
+				Enemy.setDice_atk(num_enemy);
+			}else if((Fighting_Turn % 2 != 0) && (num_enemy == 0)){
+				Enemy.setDice_def(num_enemy);
+			}else if((Fighting_Turn % 2 != 0) && (num_enemy != 0)){
+				Enemy.setDice_atk(num_enemy);
+			}else if((Fighting_Turn % 2 == 0) && (num_enemy != 0)){
+				Enemy.setDice_def(num_enemy);
+			}
+		}
+		
+		/*Fighting*/
+		
+		if(Current_Status == Status_Fighting && DELAY <= 0) {
+			if((Fighting_Turn % 2 != 0) && (num_player != 0) && (num_enemy == 0)) {
+				num_enemy = random.nextInt(6) + 1; // random เลข
+			}else if((Fighting_Turn % 2 != 0) && (num_player != 0) && (num_enemy != 0)) {
+				if(num_enemy >= num_player) {
+					Enemy.TakeDMG(1);
+				}else {
+					Enemy.TakeDMG(num_player - num_enemy);
+				}
+				num_player = 0;
+				num_enemy = 0;
+				Fighting_Turn += 1;
+				Gdx.app.log("Log : ", Fighting_Turn + "");
+			}else if((Fighting_Turn % 2 == 0) && (num_player == 0) && (num_enemy == 0)) {
+				num_enemy = random.nextInt(6) + 1; // random เลข
+			}else if((Fighting_Turn % 2 == 0) && (num_player != 0) && (num_enemy != 0)) {
+				if(num_player >= num_enemy) {
+					Calico.TakeDMG(1);
+				}else {
+					Calico.TakeDMG(num_enemy - num_player);
+				}
+				num_player = 0;
+				num_enemy = 0;
+				Fighting_Turn += 1;
+				Gdx.app.log("Log : ", Fighting_Turn + "");
+			}
+			DELAY = 1;
+		}
+		
 		if(Current_Status == Status_CheckEvent) {
 			if(Map.CheckFight(pos)) {
 				Event = 1;
@@ -192,61 +248,23 @@ public class PlayState extends State{
 			}
 		}
 		
-		if(Current_Status == Status_Fighting) {
-			if((Fighting_Turn % 2 != 0) && (num_player == 0)) {
-				Calico.setDice_atk(num_player);
-			}else if((Fighting_Turn % 2 == 0) && (num_player == 0)){
-				Calico.setDice_def(num_player);
-			}else if((Fighting_Turn % 2 != 0) && (num_player != 0)){
-				Calico.setDice_atk(num_player);
-			}else if((Fighting_Turn % 2 == 0) && (num_player != 0)){
-				Calico.setDice_def(num_player);
-			}
-			
-			if((Fighting_Turn % 2 != 0) && (num_enemy == 0)) {
-				Enemy.setDice_atk(num_player);
-			}else if((Fighting_Turn % 2 == 0) && (num_enemy == 0)){
-				Enemy.setDice_def(num_player);
-			}else if((Fighting_Turn % 2 != 0) && (num_enemy != 0)){
-				Enemy.setDice_atk(num_player);
-			}else if((Fighting_Turn % 2 == 0) && (num_enemy != 0)){
-				Enemy.setDice_def(num_player);
-			}
-		}
-		
-		if(Current_Status == Status_Fighting && DELAY <= 0) {
-			
-		}
-		
-		
-		
-//		if(Current_Status == Status_Fighting && DELAY <= 0) {
-//			if( == 1) {
-//				
-//			}
-//			
-//			
-//			
-//			
-//			
-//			
-////			if(boss_event == 1) {
-////			
-////			}
-//		}
-		
-		
 		if(Current_Status == Status_CheckEvent && DELAY <= 0) {
 			if(Event == 0) {
 				Current_Status = Status_PlayerTurn;
 				setDice_moving(0);
+				num_enemy = 0;
+				num_player = 0;
 			}else if(Event == 1) {
 				setEnemy(1);
 				Current_Status = Status_Fighting;
 				setDice_moving(0);
+				num_enemy = 0;
+				num_player = 0;
 			}else if(Event == 2) {
 				Current_Status = Status_CutScene;
 				setDice_moving(0);
+				num_enemy = 0;
+				num_player = 0;
 			}
 		}
 	}
@@ -292,11 +310,13 @@ public class PlayState extends State{
 				float[] dice_combat = {Calico.getDice_combat().getX(), Calico.getDice_combat().getY() ,Calico.getDice_combat().getWidth() ,Calico.getDice_combat().getHeight()};
 //				float[] skill_combat = {Calico.getSkill_combat().getX(), Calico.getSkill_combat().getY() ,Calico.getSkill_combat().getWidth() ,Calico.getSkill_combat().getHeight()};
 				/*Dice Combat*/
-				if((Cursor[0] >= dice_combat[0] && Cursor[0] <= dice_combat[0] + dice_combat[3]) 
+				if((Cursor[0] >= dice_combat[0] && Cursor[0] <= dice_combat[0] + dice_combat[2]) 
 						&& 
-				(Cursor[1] <= Gdx.graphics.getHeight() - dice_combat[1] && Cursor[1] >= Gdx.graphics.getHeight() - dice_combat[1] - dice_combat[4])){
-						num_player = random.nextInt(6) + 1; // random เลข
-						DELAY = 0.5;
+				(Cursor[1] <= Gdx.graphics.getHeight() - dice_combat[1] && Cursor[1] >= Gdx.graphics.getHeight() - dice_combat[1] - dice_combat[3])){
+						if(((Fighting_Turn % 2 != 0) && (num_player == 0)) || (Fighting_Turn % 2 == 0) && (num_enemy != 0)) {
+							num_player = random.nextInt(6) + 1; // random เลข
+							DELAY = 0.5;
+						}
 				}
 //				/*Skill Combat*/
 //				else if((Cursor[0] >= skill_combat[0] && Cursor[0] <= skill_combat[0] + skill_combat[3]) 

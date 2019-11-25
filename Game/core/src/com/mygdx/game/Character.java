@@ -15,9 +15,7 @@ public abstract class Character {
 	
 	public abstract void drawCombat(SpriteBatch batch);
 	
-	public abstract void setHP(int dmg);
-	
-	public abstract int getATK();
+	public abstract void TakeDMG(int dmg);
 	
 	public abstract void setDice_atk(int dice_num);
 	

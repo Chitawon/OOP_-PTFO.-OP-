@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Enemy extends Character{
 
-	private int HP, ATK;
+	private int HP = 10;
 	private Sprite enemy;
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
 	private Sprite dice_combat;
@@ -92,16 +92,10 @@ public class Enemy extends Character{
 	}
 
 	@Override
-	public void setHP(int dmg) {
+	public void TakeDMG(int dmg) {
 		// TODO Auto-generated method stub
 		this.HP -= dmg;
-		
-	}
-
-	@Override
-	public int getATK() {
-		// TODO Auto-generated method stub
-		return this.ATK;
+		Gdx.app.log("log","Enemy = " + HP );
 	}
 
 	@Override
