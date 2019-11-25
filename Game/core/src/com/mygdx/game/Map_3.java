@@ -1,18 +1,19 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
 public class Map_3 extends Map{
-	private Texture img;
+	private Texture tm, bg;
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
+	private int[] Enemy_Position = {2, 9, 16, 41, 35, 8, 20, 28, 32, 48};
 	private int Player_Position;
 	
 	public void init() {
 		Position = new int[2];
-		img = new Texture("BG1.png");
+		tm = new Texture("Background/003.png");
+		bg = new Texture("Background/BG2.png");
 		enemy_board_r = new Texture("Board/enemy_board_r.png");
 		enemy_board_l = new Texture("Board/enemy_board_l.png");
 	}
@@ -23,76 +24,43 @@ public class Map_3 extends Map{
 	}
 
 	public void draw(SpriteBatch batch) {
-		batch.draw(img, 32, 240, 96, 96); // 1
-		batch.draw(img, 32, 336, 96, 96); // 2
-		batch.draw(img, 32, 432, 96, 96); // 3
-		batch.draw(img, 32, 528, 96, 96); // 4
-		batch.draw(img, 32, 624, 96, 96); // 5
+		batch.draw(bg, 0, 0, 1312, 752);
+		batch.draw(tm, 0, 0);
 		
-		batch.draw(img, 128, 624, 96, 96); // 6
-		
-		batch.draw(img, 224, 432, 96, 96); // 17
-		batch.draw(img, 224, 336, 96, 96); // 16
-		batch.draw(img, 224, 240, 96, 96); // 15
-		batch.draw(img, 224, 624, 96, 96); // 7
-		
-		
-		batch.draw(img, 320, 240, 96, 96); // 14
-		batch.draw(img, 320, 432, 96, 96); // 18
-		batch.draw(img, 320, 624, 96, 96); // 8
-		
-		
-		batch.draw(img, 416, 240, 96, 96); // 9
-		batch.draw(img, 416, 336, 96, 96); // 10
-		batch.draw(img, 416, 432, 96, 96); // 11
-		batch.draw(img, 416, 528, 96, 96); // 12
-		batch.draw(img, 416, 624, 96, 96); // 13
-		
-		batch.draw(img, 512, 432, 96, 96); // 19
-		
-		batch.draw(img, 608, 624, 96, 96); // 22
-		batch.draw(img, 608, 528, 96, 96); // 21
-		batch.draw(img, 608, 432, 96, 96); // 20
-		batch.draw(img, 608, 336, 96, 96); // 43
-		batch.draw(img, 608, 240, 96, 96); // 42
-		
-		batch.draw(img, 704, 624, 96, 96); // 23
-		batch.draw(img, 704, 240, 96, 96); // 41
-		batch.draw(img, 704, 144, 96, 96); // 40
-		
-		batch.draw(img, 800, 624, 96, 96); // 24
-		batch.draw(img, 800, 144, 96, 96); // 39
-		batch.draw(img, 800, 48, 96, 96);  // 38
-		
-		batch.draw(img, 896, 624, 96, 96); // 25
-		batch.draw(img, 896, 48, 96, 96); // 37
-		
-		batch.draw(img, 992, 624, 96, 96); // 26
-		batch.draw(img, 992, 48, 96, 96); // 36
-		
-		batch.draw(img, 1088, 624, 96, 96); // 40
-		batch.draw(img, 1088, 48, 96, 96); // 35
-		
-		batch.draw(img, 1184, 48, 96, 96); // 28
-		batch.draw(img, 1184, 144, 96, 96); // 29
-		batch.draw(img, 1184, 240, 96, 96); // 30
-		batch.draw(img, 1184, 336, 96, 96); // 31
-		batch.draw(img, 1184, 432, 96, 96); // 32
-		batch.draw(img, 1184, 528, 96, 96); // 33
-		batch.draw(img, 1184, 624, 96, 96); // 34
-		
-		/* BOSS CENTER*/
-		batch.draw(img, 864, 496, 96, 96); // 44
-		batch.draw(img, 960, 496, 96, 96); // 45
-		batch.draw(img, 1056, 496, 96, 96); // 46
-		batch.draw(img, 1056, 400, 96, 96); // 47
-		batch.draw(img, 1056, 304, 96, 96); // 48
-		batch.draw(img, 960, 304, 96, 96); // 49
-		batch.draw(img, 864, 304, 96, 96); // 50
-		batch.draw(img, 864, 400, 96, 96); // 51
+		if(Player_Position <= 2) {
+			batch.draw(enemy_board_r, 32, 336, 96, 128);
+		}
+		if(Player_Position <= 9) {
+			batch.draw(enemy_board_r, 416, 624, 96, 128);
+		}
+		if(Player_Position <= 16) {
+			batch.draw(enemy_board_r, 224, 336, 96, 128);
+		}
+		if(Player_Position <= 41) {
+			batch.draw(enemy_board_r, 704, 240, 96, 128);
+		}
+		if(Player_Position <= 35) {
+			batch.draw(enemy_board_l, 1088, 48, 96, 128);
+		}
+		if(Player_Position <= 8) {
+			batch.draw(enemy_board_l, 320, 624, 96, 128);
+		}
+		if(Player_Position <= 20) {
+			batch.draw(enemy_board_l, 608, 432, 96, 128);
+		}
+		if(Player_Position <= 28) {
+			batch.draw(enemy_board_l, 1184, 624, 96, 128);
+		}
+		if(Player_Position <= 32) {
+			batch.draw(enemy_board_l, 1184, 240, 96, 128);
+		}
+		if(Player_Position <= 48) {
+			batch.draw(enemy_board_l, 1056, 304, 96, 128);
+		}
 	}
 
 	public int[] Position(int pos) {
+		Player_Position = pos;
 		if(pos == 1) {
 			setPosition(32, 240);
 			return Position;
@@ -251,5 +219,15 @@ public class Map_3 extends Map{
 			setPosition(864, 400);
 			return Position;
 		}
+	}
+	
+	@Override
+	public boolean CheckFight(int pos) {
+		for (int i = 0; i < Enemy_Position.length; i++) {
+			if(Enemy_Position[i] == pos) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

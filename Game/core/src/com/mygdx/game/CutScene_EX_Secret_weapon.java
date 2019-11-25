@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CutScene_EX_Secret_wepon extends CutScene{
+public class CutScene_EX_Secret_weapon extends CutScene{
 	private Sprite Scene;
 	private Texture Scene_1, Scene_2, Scene_3, Scene_4, Scene_5, Scene_6, Scene_7 ;
 	private Texture Scene_8, Scene_9, Scene_10, Scene_11;

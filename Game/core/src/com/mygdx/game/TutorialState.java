@@ -15,9 +15,9 @@ public class TutorialState extends State{
 	@Override
 	public void init() {
 		batch = new SpriteBatch();
-		startButton = new Sprite(new Texture(Gdx.files.internal("Untitled.png")));
-		b1 = new Sprite(new Texture(Gdx.files.internal("Untitled.png")));
-		b2 = new Sprite(new Texture(Gdx.files.internal("Untitled.png")));
+		startButton = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
+		b1 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
+		b2 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
 		
 	}
 	
@@ -43,16 +43,10 @@ public class TutorialState extends State{
 	
 	@Override
 	public void handle() {
-		int x = InputManager.getCursorX();
-		int y = InputManager.getCursorY();
 		if(InputManager.Isclick()) {
-			if((x >= startButton.getX() && x <= startButton.getX() + startButton.getWidth()) 
-				&& 
-		(y <= Gdx.graphics.getHeight() - startButton.getY() && y >= Gdx.graphics.getHeight() - startButton.getY() - startButton.getHeight())){
-				
+			gsm.setState(GameStateManager.START);
 			}
 		}
-	}
 	
 	@Override
 	public void dispose() {

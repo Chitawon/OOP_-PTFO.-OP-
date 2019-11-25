@@ -1,31 +1,33 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public abstract class Character {
-	protected int HP;
-	protected int ATK;
-	protected String Name;
 	
-	public int getHP() {
-		return HP;
-	}
+	public abstract void init();
 	
-	public void setHP(int hP) {
-		HP = hP;
-	}
+	public abstract void draw(SpriteBatch batch);
 	
-	public int getATK() {
-		return ATK;
-	}
+	public abstract void update(float dt);
 	
-	public void setATK(int aTK) {
-		ATK = aTK;
-	}
+	public abstract void setPosition(int[] pos);
 	
-	public String getName() {
-		return Name;
-	}
+	public abstract void drawCombat(SpriteBatch batch);
 	
-	public void setName(String name) {
-		Name = name;
-	}
+	public abstract void setHP(int dmg);
+	
+	public abstract int getATK();
+	
+	public abstract void setDice_atk(int dice_num);
+	
+	public abstract void setDice_def(int dice_num);
+	
+	public abstract Sprite getDice_combat();
+
+	public abstract Sprite getSkill_combat();
+	
+	public abstract void setSkill_atk(int skill);
+	
+	public abstract void setSkill_def(int skill);
 }

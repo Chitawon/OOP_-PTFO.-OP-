@@ -3,31 +3,20 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
 	
-	static int width, height;
 	GameStateManager gsm; //สร้างเกม GameStateManager(เปลี่ยนฉาก)
 	SpriteBatch batch;
 	
-	OrthographicCamera cam; //กล้องของเกม
-	
 	@Override
 	public void create () {
-		
-		width = Gdx.graphics.getWidth();
-		
-		height = Gdx.graphics.getHeight();
-		
+
 		gsm = new GameStateManager();
 		
 		batch = new SpriteBatch();
 
-		cam = new OrthographicCamera(width, height);
-		cam.translate(width / 2, height/2); //กลางจอ
-		cam.update();
 	}
 
 	@Override
