@@ -8,6 +8,7 @@ public class Map_3 extends Map{
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
 	private int[] Enemy_Position = {2, 9, 16, 41, 35, 8, 20, 28, 32, 48};
+	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true, true};
 	private int Player_Position;
 	
 	public void init() {
@@ -225,9 +226,21 @@ public class Map_3 extends Map{
 	public boolean CheckFight(int pos) {
 		for (int i = 0; i < Enemy_Position.length; i++) {
 			if(Enemy_Position[i] == pos) {
-				return true;
+				if(Enemy_Alive[i]) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void Enemy_Alive(int pos) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < Enemy_Position.length; i++) {
+			if(Enemy_Position[i] == pos) {
+				Enemy_Alive[i] = false;
+			}
+		}
 	}
 }

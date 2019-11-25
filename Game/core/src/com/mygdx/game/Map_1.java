@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
@@ -7,7 +8,8 @@ public class Map_1 extends Map{
 	private Texture tm, bg;
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
-	private int[] Enemy_Position = {5, 8, 12, 16, 22, 27, 33, 37, 41, 46};
+	private int[] Enemy_Position = {5, 8, 12, 16, 22, 27, 32, 37, 41, 46};
+	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true, true};
 	private int Player_Position;
 	
 	public void init() {
@@ -27,34 +29,34 @@ public class Map_1 extends Map{
 		batch.draw(bg, 0, 0, 1312, 752);
 		batch.draw(tm, 0, 0);
 		
-		if(Player_Position <= 5) {
+		if(Enemy_Alive[0]) {
 			batch.draw(enemy_board_r, 32, 624, 96, 128);
 		}
-		if(Player_Position <= 16) {
+		if(Enemy_Alive[3]) {
 			batch.draw(enemy_board_r, 416, 528, 96, 128);
 		}
-		if(Player_Position <= 27) {
+		if(Enemy_Alive[5]) {
 			batch.draw(enemy_board_r, 608, 240, 96, 128);
 		}
-		if(Player_Position <= 37) {
+		if(Enemy_Alive[7]) {
 			batch.draw(enemy_board_r, 992, 432, 96, 128);
 		}
-		if(Player_Position <= 8) {
+		if(Enemy_Alive[1]) {
 			batch.draw(enemy_board_l, 224, 528, 96, 128);
 		}
-		if(Player_Position <= 12) {
+		if(Enemy_Alive[2]) {
 			batch.draw(enemy_board_l, 320, 240, 96, 128);
 		}
-		if(Player_Position <= 22) {
+		if(Enemy_Alive[4]) {
 			batch.draw(enemy_board_l, 800, 528, 96, 128);
 		}
-		if(Player_Position <= 33) {
+		if(Enemy_Alive[6]) {
 			batch.draw(enemy_board_l, 922, 48, 96, 128);
 		}
-		if(Player_Position <= 41) {
+		if(Enemy_Alive[8]) {
 			batch.draw(enemy_board_l, 1184, 624, 96, 128);
 		}
-		if(Player_Position <= 46) {
+		if(Enemy_Alive[9]) {
 			batch.draw(enemy_board_l, 1184, 144, 96, 128);
 		}
 	}
@@ -212,9 +214,22 @@ public class Map_1 extends Map{
 	public boolean CheckFight(int pos) {
 		for (int i = 0; i < Enemy_Position.length; i++) {
 			if(Enemy_Position[i] == pos) {
-				return true;
+				if(Enemy_Alive[i] == true) {
+					return true;
+				}
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void Enemy_Alive(int pos) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < Enemy_Position.length; i++) {
+			if(Enemy_Position[i] == pos) {
+				Enemy_Alive[i] = false;
+				break;
+			}
+		}
 	}
 }

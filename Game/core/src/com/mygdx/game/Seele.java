@@ -52,9 +52,14 @@ public class Seele extends Character{
 	public void TakeDMG(int dmg) {
 		// TODO Auto-generated method stub
 		this.HP -= dmg;
-		Gdx.app.log("log", HP + "");
 	}
-
+	
+	@Override
+	public int getHP() {
+		// TODO Auto-generated method stub
+		return this.HP;
+	}
+	
 	@Override
 	public void setDice_atk(int dice_num) {
 		// TODO Auto-generated method stub
@@ -90,6 +95,8 @@ public class Seele extends Character{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 
 

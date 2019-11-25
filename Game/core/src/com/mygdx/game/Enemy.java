@@ -10,6 +10,7 @@ public class Enemy extends Character{
 	private int HP = 10;
 	private Sprite enemy;
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
+	private Texture hpbar1, hpbar2;
 	private Sprite dice_combat;
 	
 	@Override
@@ -27,6 +28,9 @@ public class Enemy extends Character{
 		d4_combat = new Texture("Battle/dn4.png");
 		d5_combat = new Texture("Battle/dn5.png");
 		d6_combat = new Texture("Battle/dn6.png");
+		
+		hpbar1 = new Texture("Battle/hpbar1.png");
+		hpbar2 = new Texture("Battle/hpbar2.png");
 	}
 
 	@Override
@@ -50,7 +54,11 @@ public class Enemy extends Character{
 	@Override
 	public void drawCombat(SpriteBatch batch) {
 		// TODO Auto-generated method stub
-		batch.draw(dice_combat, 1184, 400);
+		dice_combat.setSize(96, 96);
+		dice_combat.setPosition(1152, 304);
+		dice_combat.draw(batch);
+		batch.draw(hpbar1, 796, 460, 408, 40);
+		batch.draw(hpbar2, 800, 464, 400, 32);
 		enemy.setPosition(896, 272);
 		enemy.draw(batch);
 	}
@@ -95,7 +103,12 @@ public class Enemy extends Character{
 	public void TakeDMG(int dmg) {
 		// TODO Auto-generated method stub
 		this.HP -= dmg;
-		Gdx.app.log("log","Enemy = " + HP );
+	}
+	
+	@Override
+	public int getHP() {
+		// TODO Auto-generated method stub
+		return this.HP;
 	}
 
 	@Override

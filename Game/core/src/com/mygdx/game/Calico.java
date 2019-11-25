@@ -10,6 +10,7 @@ public class Calico extends Character{
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
 	private Texture skill_1_atk, skill_2_atk, skill_3_atk, skill_4_atk, skill_5_atk;
 	private Texture skill_1_def, skill_2_def, skill_3_def, skill_4_def, skill_5_def;
+	private Texture hpbar1, hpbar2;
 	private Sprite dice_combat, skill_combat;
 	private int HP = 50;
 	
@@ -49,6 +50,9 @@ public class Calico extends Character{
 		skill_4_def = new Texture("Battle/sniper_def.png");
 		skill_5_def = new Texture("Battle/sup_def.png");
 		
+		hpbar1 = new Texture("Battle/hpbar1.png");
+		hpbar2 = new Texture("Battle/hpbar2.png");
+		
 	}
 
 	@Override
@@ -77,11 +81,14 @@ public class Calico extends Character{
 
 	@Override
 	public void drawCombat(SpriteBatch batch) {
-		skill_combat.setPosition(128, 240);
+		skill_combat.setSize(96, 96);
+		skill_combat.setPosition(96, 256);
 		skill_combat.draw(batch);
-		dice_combat.setPosition(128, 400);
+		dice_combat.setSize(96, 96);
+		dice_combat.setPosition(96, 400);
 		dice_combat.draw(batch);
-		batch.draw(skill_combat, 128, 240);
+		batch.draw(hpbar1, 220, 460, 408, 40);
+		batch.draw(hpbar2, 224, 464, 400, 32);
 		player_combat.setPosition(384, 272);
 		player_combat.setSize(84, 100);
 		player_combat.draw(batch);
@@ -90,7 +97,12 @@ public class Calico extends Character{
 	@Override
 	public void TakeDMG(int dmg) {
 		this.HP -= dmg;
-		Gdx.app.log("log","Player = " + HP);
+	}
+	
+	@Override
+	public int getHP() {
+		// TODO Auto-generated method stub
+		return this.HP;
 	}
 
 	@Override

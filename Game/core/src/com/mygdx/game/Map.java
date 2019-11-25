@@ -14,4 +14,5 @@ public abstract class Map {
 	
 	public abstract boolean CheckFight(int pos);
 	
+	public abstract void Enemy_Alive(int pos);
 }

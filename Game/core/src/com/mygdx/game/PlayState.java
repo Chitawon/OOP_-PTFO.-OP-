@@ -10,6 +10,7 @@ public class PlayState extends State{
 	private SpriteBatch batch;
 	
 	private Texture icon, skill_moving, bag, dn, d1, d2, d3, d4;
+	private Texture hpbar1, hpbar2;
 	private Sprite dice_moving, player;
 	
 	private Random random;
@@ -69,6 +70,8 @@ public class PlayState extends State{
 		dice_moving = new Sprite(new Texture(Gdx.files.internal("UI/dice_walk.png")));
 		icon = new Texture("UI/player_icon.png");
 		skill_moving = new Texture("player_skill_1.png");
+		hpbar1 = new Texture("UI/hpbar1.png");
+		hpbar2 = new Texture("UI/hpbar2.png");
 		bag = new Texture("UI/BP.png");
 		dn = new Texture("UI/dice_walk.png");
 		d1 = new Texture("UI/d1.png");
@@ -98,8 +101,10 @@ public class PlayState extends State{
 
 		/* UI */
 		batch.draw(icon, 32, 16, 128, 160);
-		batch.draw(skill_moving, 192,16, 96, 96);
+		batch.draw(skill_moving, 192, 16, 96, 96);
 		batch.draw(bag, 448, 16, 96, 96);
+		batch.draw(hpbar1, 192, 136, 408, 40);
+		batch.draw(hpbar2, 196, 140, 400, 32);
 		dice_moving.setPosition(320, 16);
 		dice_moving.setSize(96, 96);
 		dice_moving.draw(batch);
@@ -119,7 +124,7 @@ public class PlayState extends State{
 	@Override
 	public void update(float dt) {
 		handle();
-		
+
 		if(Current_Status == Status_PlayerMoving || Current_Status == Status_CheckEvent || Current_Status == Status_Fighting) {
 			DELAY -= dt;
 		}
@@ -185,14 +190,18 @@ public class PlayState extends State{
 				num_enemy = random.nextInt(6) + 1; // random เลข
 			}else if((Fighting_Turn % 2 != 0) && (num_player != 0) && (num_enemy != 0)) {
 				if(num_enemy >= num_player) {
-					Enemy.TakeDMG(1);
+					Enemy.TakeDMG(1 * 10);
 				}else {
-					Enemy.TakeDMG(num_player - num_enemy);
+					Enemy.TakeDMG(10 * (num_player - num_enemy));
 				}
-				num_player = 0;
-				num_enemy = 0;
-				Fighting_Turn += 1;
-				Gdx.app.log("Log : ", Fighting_Turn + "");
+				if(Enemy.getHP() > 0) {
+					num_player = 0;
+					num_enemy = 0;
+					Fighting_Turn += 1;
+				}else {
+					Map.Enemy_Alive(pos);
+					Current_Status = Status_CheckEvent;
+				}
 			}else if((Fighting_Turn % 2 == 0) && (num_player == 0) && (num_enemy == 0)) {
 				num_enemy = random.nextInt(6) + 1; // random เลข
 			}else if((Fighting_Turn % 2 == 0) && (num_player != 0) && (num_enemy != 0)) {
@@ -201,20 +210,19 @@ public class PlayState extends State{
 				}else {
 					Calico.TakeDMG(num_enemy - num_player);
 				}
-				num_player = 0;
-				num_enemy = 0;
-				Fighting_Turn += 1;
-				Gdx.app.log("Log : ", Fighting_Turn + "");
+				if(Calico.getHP() > 0) {
+					num_player = 0;
+					num_enemy = 0;
+					Fighting_Turn += 1;
+				}
+//				else {
+//					
+//				}
 			}
 			DELAY = 1;
 		}
 		
 		if(Current_Status == Status_CheckEvent) {
-			if(Map.CheckFight(pos)) {
-				Event = 1;
-			}else {
-				Event = 0;
-			}
 			
 			if(pos == 47 && current_Map == MAP_1) {
 				Event = 0;
@@ -233,10 +241,7 @@ public class PlayState extends State{
 			if(pos >= 13 && current_Map == MAP_2 && ex_s2_event == 0) {
 				Event = 2;
 				setCutScene_group(Scene_group_2);
-				ex_s2_event = 1;
-			}
-			
-			if(pos == 51 && current_Map == MAP_3 && boss_event == 0) {
+			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 0) {
 				Event = 2;
 				setCutScene_group(Scene_group_3);
 			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 2) {
@@ -245,6 +250,10 @@ public class PlayState extends State{
 			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 3) {
 				Event = 2;
 				setCutScene_group(Scene_group_5);
+			}else if(Map.CheckFight(pos)) {
+				Event = 1;
+			}else {
+				Event = 0;
 			}
 		}
 		
@@ -282,7 +291,7 @@ public class PlayState extends State{
 					&& 
 			(Cursor[1] <= Gdx.graphics.getHeight() - dice_moving.getY() && Cursor[1] >= Gdx.graphics.getHeight() - dice_moving.getY() - dice_moving.getHeight())){
 //					num = random.nextInt(4) + 1; // random เลข
-					num_player = 4;
+					num_player = 15;
 					Current_Status = Status_PlayerMoving;
 					setDice_moving(num_player);
 					DELAY = 0.5;
@@ -299,6 +308,9 @@ public class PlayState extends State{
 						Current_Status = Status_Fighting;
 						boss_event = 1;
 						Event = 1;
+					}else if(pos >= 13 && current_Map == MAP_2 && ex_s2_event == 0) {
+						ex_s2_event = 1;
+						Current_Status = Status_CheckEvent;
 					}else {
 						Event = 0;
 						Current_Status = Status_CheckEvent;
