@@ -7,22 +7,39 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Calico extends Character{
 
+	
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
 	private Texture skill_1_atk, skill_2_atk, skill_3_atk, skill_4_atk, skill_5_atk;
 	private Texture skill_1_def, skill_2_def, skill_3_def, skill_4_def, skill_5_def;
-	private Texture hpbar1, hpbar2;
+	private Sprite hpbar1, hpbar2;
 	private Sprite dice_combat, skill_combat;
 	private int HP = 50;
+	private int current_animation;
+	private double DELAY;
 	
 	private int[] Position_player;
+	private int[] P_stand, P_ATK, P_getHIT, P_Down;
+	private Texture player_stand, player_ATK, player_getHIT, player_Down;
 	private Sprite player_field, player_combat;
 	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
 		Position_player = new int[2];
-		player_field = new Sprite(new Texture(Gdx.files.internal("Board/player_board.png"))); //set Sprite เป็นรูป
-		player_combat = new Sprite(new Texture(Gdx.files.internal("Board/player_board.png")));
+		
+		P_stand = new int[] {320, 240, 148, 169};
+		P_ATK = new int[] {320, 240, 167, 171};
+		P_getHIT = new int[] {320, 240, 164, 170};
+		P_Down = new int[] {320, 240, 171, 96};
+		
+		
+		player_field = new Sprite(new Texture(Gdx.files.internal("Character/Board/player_board.png"))); //set Sprite เป็นรูป
+		player_combat = new Sprite(new Texture(Gdx.files.internal("Character/Battle/Calico/calico_stand.png")));
+		
+		player_stand = new Texture("Character/Battle/Calico/calico_stand.png");
+		player_ATK = new Texture("Character/Battle/Calico/calico_atk.png");
+		player_getHIT = new Texture("Character/Battle/Calico/calico_gethit.png");
+		player_Down = new Texture("Character/Battle/Calico/calico_down.png");
 		
 		dice_combat = new Sprite(new Texture(Gdx.files.internal("Battle/dice_atk.png")));
 		
@@ -42,16 +59,16 @@ public class Calico extends Character{
 		skill_2_atk = new Texture("Battle/pistol_atk.png");
 		skill_3_atk = new Texture("Battle/shotgun_atk.png");
 		skill_4_atk = new Texture("Battle/sniper_atk.png");
-		skill_5_atk = new Texture("Battle/sup_atk.png");
+		skill_5_atk = new Texture("Battle/suppressor_atk.png");
 		
 		skill_1_def = new Texture("Battle/dagger_def.png");
 		skill_2_def = new Texture("Battle/pistol_def.png");
 		skill_3_def = new Texture("Battle/shotgun_def.png");
 		skill_4_def = new Texture("Battle/sniper_def.png");
-		skill_5_def = new Texture("Battle/sup_def.png");
+		skill_5_def = new Texture("Battle/suppressor_def.png");
 		
-		hpbar1 = new Texture("Battle/hpbar1.png");
-		hpbar2 = new Texture("Battle/hpbar2.png");
+		hpbar1 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar1.png")));
+		hpbar2 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar2.png")));
 		
 	}
 
@@ -66,6 +83,20 @@ public class Calico extends Character{
 	@Override
 	public void update(float dt) {
 		// TODO Auto-generated method stub
+		if(DELAY > 0) {
+			DELAY -= dt;
+		}
+		
+		if(DELAY <= 0) {
+			DELAY = 0;
+		}
+		
+		if(current_animation != 0 && DELAY <= 0 && current_animation != 4) {
+			setAnimation(0);
+			current_animation = 0;
+		}
+		
+		hpbar2.setSize(this.HP * 8, 32);
 		
 	}
 
@@ -87,10 +118,15 @@ public class Calico extends Character{
 		dice_combat.setSize(96, 96);
 		dice_combat.setPosition(96, 400);
 		dice_combat.draw(batch);
-		batch.draw(hpbar1, 220, 460, 408, 40);
-		batch.draw(hpbar2, 224, 464, 400, 32);
-		player_combat.setPosition(384, 272);
-		player_combat.setSize(84, 100);
+		hpbar1.setPosition(220, 460);
+		hpbar1.setSize(408, 40);
+		hpbar1.draw(batch);
+		hpbar2.setPosition(224, 464);
+		hpbar2.draw(batch);
+		if(current_animation == 0){
+			player_combat.setPosition(320, 240);
+			player_combat.setSize(148, 169);
+		}
 		player_combat.draw(batch);
 	}
 
@@ -105,6 +141,34 @@ public class Calico extends Character{
 		return this.HP;
 	}
 
+	public void setHP(int hP) {
+		HP = hP;
+	}
+
+	@Override
+	public void setAnimation(int animation) {
+		// TODO Auto-generated method stub
+		if(animation == 0) {
+			player_combat.setPosition(P_stand[0], P_stand[1]);
+			player_combat.setSize(P_stand[2], P_stand[3]);
+			player_combat.setTexture(player_stand);
+		}else if(animation == 1) {
+			player_combat.setPosition(P_ATK[0], P_ATK[1]);
+			player_combat.setSize(P_ATK[2], P_ATK[3]);
+			player_combat.setTexture(player_ATK);
+		}else if(animation == 2) {
+			player_combat.setPosition(P_getHIT[0], P_getHIT[1]);
+			player_combat.setSize(P_getHIT[2], P_getHIT[3]);
+			player_combat.setTexture(player_getHIT);
+		}else if(animation == 3) {
+			player_combat.setPosition(P_Down[0], P_Down[1]);
+			player_combat.setSize(P_Down[2], P_Down[3]);
+			player_combat.setTexture(player_Down);
+		}
+		DELAY = 1;
+		current_animation = animation;
+	}
+	
 	@Override
 	public void setDice_atk(int dice_num) {
 		if(dice_num == 0) {
@@ -184,4 +248,5 @@ public class Calico extends Character{
 		// TODO Auto-generated method stub
 		return skill_combat;
 	}
+	
 }

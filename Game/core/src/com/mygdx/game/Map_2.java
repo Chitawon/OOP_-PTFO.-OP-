@@ -7,7 +7,7 @@ public class Map_2 extends Map{
 	private Texture tm, bg;
 	private Texture enemy_board_r, enemy_board_l, bear_sleep, bear_stand;
 	private int[] Position;
-	private int[] Enemy_Position = {5, 16, 32, 43, 8, 12, 22, 27, 37};
+	private int[] Enemy_Position = {5, 8, 12, 16, 22, 27, 32, 37, 43};
 	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true};
 	private int Player_Position;
 
@@ -15,10 +15,10 @@ public class Map_2 extends Map{
 		Position = new int[2];
 		tm = new Texture("Background/002.png");
 		bg = new Texture("Background/BG1.png");
-		enemy_board_r = new Texture("Board/enemy_board_r.png");
-		enemy_board_l = new Texture("Board/enemy_board_l.png");
-		bear_stand = new Texture("Board/bear_stand.png");
-		bear_sleep = new Texture("Board/bear_sleep.png");
+		enemy_board_r = new Texture("Character/Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Character/Board/enemy_board_l.png");
+		bear_stand = new Texture("Character/Board/bear_stand.png");
+		bear_sleep = new Texture("Character/Board/bear_sleep.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -36,31 +36,31 @@ public class Map_2 extends Map{
 			batch.draw(bear_sleep, 554, 624, 200, 160);
 		}
 		
-		if(Player_Position <= 5) {
+		if(Enemy_Alive[0]) {
 			batch.draw(enemy_board_r, 32, 240, 96, 128);
 		}
-		if(Player_Position <= 16) {
+		if(Enemy_Alive[3]) {
 			batch.draw(enemy_board_r, 416, 336, 96, 128);
 		}
-		if(Player_Position <= 32) {
+		if(Enemy_Alive[6]) {
 			batch.draw(enemy_board_r, 896, 240, 96, 128);
 		}
-		if(Player_Position <= 43) {
+		if(Enemy_Alive[8]) {
 			batch.draw(enemy_board_r, 1184, 432, 96, 128);
 		}
-		if(Player_Position <= 8) {
+		if(Enemy_Alive[1]) {
 			batch.draw(enemy_board_l, 224, 336, 96, 128);
 		}
-		if(Player_Position <= 12) {
+		if(Enemy_Alive[2]) {
 			batch.draw(enemy_board_l, 320, 624, 96, 128);
 		}
-		if(Player_Position <= 22) {
+		if(Enemy_Alive[4]) {
 			batch.draw(enemy_board_l, 704, 432, 96, 128);
 		}
-		if(Player_Position <= 27) {
+		if(Enemy_Alive[5]) {
 			batch.draw(enemy_board_l, 992, 624, 96, 128);
 		}
-		if(Player_Position <= 37) {
+		if(Enemy_Alive[7]) {
 			batch.draw(enemy_board_l, 992, 48, 96, 128);
 		}
 		

@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,16 +9,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Enemy extends Character{
 
-	private int HP = 10;
+	private int HP = 5;
+	private double DELAY;
+	
 	private Sprite enemy;
+	private Texture Enemy_stand, Enemy_ATK, Enemy_getHIT, Enemy_Down;
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
-	private Texture hpbar1, hpbar2;
+	private Sprite hpbar1, hpbar2;
 	private Sprite dice_combat;
+	private int[] E_stand, E_ATK, E_getHIT, E_Down;
+	private int current_animation;
+	private Random random;
 	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		enemy = new Sprite(new Texture(Gdx.files.internal("Board/player_board.png")));
+		
+		enemy = new Sprite(new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_stand.png")));
 		
 		dice_combat = new Sprite(new Texture(Gdx.files.internal("Battle/dice_atk.png")));
 		
@@ -29,8 +38,79 @@ public class Enemy extends Character{
 		d5_combat = new Texture("Battle/dn5.png");
 		d6_combat = new Texture("Battle/dn6.png");
 		
-		hpbar1 = new Texture("Battle/hpbar1.png");
-		hpbar2 = new Texture("Battle/hpbar2.png");
+		hpbar1 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar1.png")));
+		hpbar2 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar2.png")));
+		
+		init(1);
+	}
+	
+	public void init(int random) {
+		if(random == 1) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_down.png"));
+			E_stand = new int[] {928, 240, 149, 198};
+			E_ATK = new int[] {928, 240, 147, 198};
+			E_getHIT = new int[] {928, 240, 161, 154};
+			E_Down = new int[] {928, 240, 180, 126};
+		}
+//		else if(random == 2) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}else if(random == 3) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}else if(random == 4) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}else if(random == 5) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}else if(random == 6) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}else if(random == 7) {
+//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
+//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
+//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
+//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
+//			E_stand = {};
+//			E_ATK = {};
+//			E_getHIT = {};
+//			E_Down = {};
+//		}
+		enemy = new Sprite(Enemy_stand);
 	}
 
 	@Override
@@ -43,6 +123,22 @@ public class Enemy extends Character{
 	public void update(float dt) {
 		// TODO Auto-generated method stub
 		
+		if(DELAY > 0) {
+			DELAY -= dt;
+		}
+		
+		if(DELAY <= 0) {
+			DELAY = 0;
+		}
+		
+		if(current_animation != 0 && DELAY <= 0 && current_animation != 3) {
+			setAnimation(0);
+		}else if(current_animation != 0 && DELAY <= 0 && current_animation == 3) {
+			setAnimation(3);
+			current_animation = 3;
+		}
+
+		hpbar2.setSize(this.HP * 80, 32);
 	}
 
 	@Override
@@ -57,10 +153,40 @@ public class Enemy extends Character{
 		dice_combat.setSize(96, 96);
 		dice_combat.setPosition(1152, 304);
 		dice_combat.draw(batch);
-		batch.draw(hpbar1, 796, 460, 408, 40);
-		batch.draw(hpbar2, 800, 464, 400, 32);
-		enemy.setPosition(896, 272);
+		hpbar1.setSize(408, 40);
+		hpbar1.setPosition(796, 460);
+		hpbar1.draw(batch);
+		hpbar2.setPosition(800, 464);
+		hpbar2.draw(batch);
+		if(current_animation == 0) {
+			enemy.setSize(149, 198);
+			enemy.setPosition(928, 240);
+		}
 		enemy.draw(batch);
+	}
+	
+	@Override
+	public void setAnimation(int animation) {
+		// TODO Auto-generated method stub
+		if(animation == 0) {
+			enemy.setPosition(E_stand[0], E_stand[1]);
+			enemy.setSize(E_stand[2], E_stand[3]);
+			enemy.setTexture(Enemy_stand);
+		}else if(animation == 1) {
+			enemy.setPosition(E_ATK[0], E_ATK[1]);
+			enemy.setSize(E_ATK[2], E_ATK[3]);
+			enemy.setTexture(Enemy_ATK);
+		}else if(animation == 2) {
+			enemy.setPosition(E_getHIT[0], E_getHIT[1]);
+			enemy.setSize(E_getHIT[2], E_getHIT[3]);
+			enemy.setTexture(Enemy_getHIT);
+		}else if(animation == 3) {
+			enemy.setPosition(E_Down[0], E_Down[1]);
+			enemy.setSize(E_Down[2], E_Down[3]);
+			enemy.setTexture(Enemy_Down);
+		}
+		DELAY = 1;
+		current_animation = animation;
 	}
 	
 	public void setDice_atk(int dice_num) {
@@ -103,6 +229,9 @@ public class Enemy extends Character{
 	public void TakeDMG(int dmg) {
 		// TODO Auto-generated method stub
 		this.HP -= dmg;
+		if(HP <= 0) {
+			this.HP = 0;
+		}
 	}
 	
 	@Override

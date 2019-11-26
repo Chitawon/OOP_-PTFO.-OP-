@@ -7,7 +7,7 @@ public class Map_3 extends Map{
 	private Texture tm, bg;
 	private Texture enemy_board_r, enemy_board_l;
 	private int[] Position;
-	private int[] Enemy_Position = {2, 9, 16, 41, 35, 8, 20, 28, 32, 48};
+	private int[] Enemy_Position = {2, 8, 9, 16, 20, 28, 32, 35, 41, 48};
 	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true, true};
 	private int Player_Position;
 	
@@ -15,8 +15,8 @@ public class Map_3 extends Map{
 		Position = new int[2];
 		tm = new Texture("Background/003.png");
 		bg = new Texture("Background/BG2.png");
-		enemy_board_r = new Texture("Board/enemy_board_r.png");
-		enemy_board_l = new Texture("Board/enemy_board_l.png");
+		enemy_board_r = new Texture("Character/Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Character/Board/enemy_board_l.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -28,34 +28,34 @@ public class Map_3 extends Map{
 		batch.draw(bg, 0, 0, 1312, 752);
 		batch.draw(tm, 0, 0);
 		
-		if(Player_Position <= 2) {
+		if(Enemy_Alive[0]) {
 			batch.draw(enemy_board_r, 32, 336, 96, 128);
 		}
-		if(Player_Position <= 9) {
+		if(Enemy_Alive[2]) {
 			batch.draw(enemy_board_r, 416, 624, 96, 128);
 		}
-		if(Player_Position <= 16) {
+		if(Enemy_Alive[3]) {
 			batch.draw(enemy_board_r, 224, 336, 96, 128);
 		}
-		if(Player_Position <= 41) {
+		if(Enemy_Alive[8]) {
 			batch.draw(enemy_board_r, 704, 240, 96, 128);
 		}
-		if(Player_Position <= 35) {
+		if(Enemy_Alive[7]) {
 			batch.draw(enemy_board_l, 1088, 48, 96, 128);
 		}
-		if(Player_Position <= 8) {
+		if(Enemy_Alive[1]) {
 			batch.draw(enemy_board_l, 320, 624, 96, 128);
 		}
-		if(Player_Position <= 20) {
+		if(Enemy_Alive[4]) {
 			batch.draw(enemy_board_l, 608, 432, 96, 128);
 		}
-		if(Player_Position <= 28) {
+		if(Enemy_Alive[5]) {
 			batch.draw(enemy_board_l, 1184, 624, 96, 128);
 		}
-		if(Player_Position <= 32) {
+		if(Enemy_Alive[6]) {
 			batch.draw(enemy_board_l, 1184, 240, 96, 128);
 		}
-		if(Player_Position <= 48) {
+		if(Enemy_Alive[9]) {
 			batch.draw(enemy_board_l, 1056, 304, 96, 128);
 		}
 	}

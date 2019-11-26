@@ -30,4 +30,6 @@ public abstract class Character {
 	public abstract void setSkill_atk(int skill);
 	
 	public abstract void setSkill_def(int skill);
+	
+	public abstract void setAnimation(int animation);
 }

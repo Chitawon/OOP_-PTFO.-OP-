@@ -10,7 +10,7 @@ public class PlayState extends State{
 	private SpriteBatch batch;
 	
 	private Texture icon, skill_moving, bag, dn, d1, d2, d3, d4;
-	private Texture hpbar1, hpbar2;
+	private Sprite hpbar1, hpbar2;
 	private Sprite dice_moving, player;
 	
 	private Random random;
@@ -23,7 +23,7 @@ public class PlayState extends State{
 	
 	private CutScene CutScene;
 	
-	private int num_player = 0, pos = 1, current_Map, Stpe_moving, Scene = 1, num_enemy = 0, skill = 0;
+	private int num_player = 0, pos = 1, current_Map, Stpe_moving, Scene = 1, num_enemy = 0, skill = 0, final_s = 0;
 	private int Event = 0; // 0 = ไม่มี, 1 = สู้, 2 = CutScene, 3 = เปลี่ยน map
 //	private int sp_event = 30; // เกิด Scene_group_7
 	private int ex_s2_event = 0; // เกิด ex_s2
@@ -70,8 +70,8 @@ public class PlayState extends State{
 		dice_moving = new Sprite(new Texture(Gdx.files.internal("UI/dice_walk.png")));
 		icon = new Texture("UI/player_icon.png");
 		skill_moving = new Texture("player_skill_1.png");
-		hpbar1 = new Texture("UI/hpbar1.png");
-		hpbar2 = new Texture("UI/hpbar2.png");
+		hpbar1 = new Sprite(new Texture(Gdx.files.internal("UI/hpbar1.png")));
+		hpbar2 = new Sprite(new Texture(Gdx.files.internal("UI/hpbar2.png")));
 		bag = new Texture("UI/BP.png");
 		dn = new Texture("UI/dice_walk.png");
 		d1 = new Texture("UI/d1.png");
@@ -96,19 +96,24 @@ public class PlayState extends State{
 	@Override
 	public void draw() {
 		batch.begin();
-		/* Map */
-		Map.draw(batch);
+		if(final_s == 0) {
+			/* Map */
+			Map.draw(batch);
 
-		/* UI */
-		batch.draw(icon, 32, 16, 128, 160);
-		batch.draw(skill_moving, 192, 16, 96, 96);
-		batch.draw(bag, 448, 16, 96, 96);
-		batch.draw(hpbar1, 192, 136, 408, 40);
-		batch.draw(hpbar2, 196, 140, 400, 32);
-		dice_moving.setPosition(320, 16);
-		dice_moving.setSize(96, 96);
-		dice_moving.draw(batch);
-		Calico.draw(batch);
+			/* UI */
+			batch.draw(icon, 32, 16, 128, 160);
+			batch.draw(skill_moving, 192, 16, 96, 96);
+			batch.draw(bag, 448, 16, 96, 96);
+			hpbar1.setSize(408, 40);
+			hpbar1.setPosition(192, 136);
+			hpbar1.draw(batch);
+			hpbar2.setPosition(196, 140);
+			hpbar2.draw(batch);
+			dice_moving.setPosition(320, 16);
+			dice_moving.setSize(96, 96);
+			dice_moving.draw(batch);
+			Calico.draw(batch);
+		}
 //		if(ex_s2_event == 1) {
 //			Seele.draw(batch);
 //		}
@@ -125,6 +130,8 @@ public class PlayState extends State{
 	public void update(float dt) {
 		handle();
 
+		hpbar2.setSize(Calico.getHP() * 8, 32);
+		
 		if(Current_Status == Status_PlayerMoving || Current_Status == Status_CheckEvent || Current_Status == Status_Fighting) {
 			DELAY -= dt;
 		}
@@ -181,6 +188,14 @@ public class PlayState extends State{
 			}else if((Fighting_Turn % 2 == 0) && (num_enemy != 0)){
 				Enemy.setDice_def(num_enemy);
 			}
+			Calico.update(dt);
+			Enemy.update(dt);
+		}
+		
+		if(Current_Status == Status_Fighting && DELAY <= 0) {
+			if(Enemy.getHP() <= 0) {
+				Current_Status = Status_CheckEvent;
+			}
 		}
 		
 		/*Fighting*/
@@ -189,25 +204,38 @@ public class PlayState extends State{
 			if((Fighting_Turn % 2 != 0) && (num_player != 0) && (num_enemy == 0)) {
 				num_enemy = random.nextInt(6) + 1; // random เลข
 			}else if((Fighting_Turn % 2 != 0) && (num_player != 0) && (num_enemy != 0)) {
+				Calico.setAnimation(1);
+				Enemy.setAnimation(2);
 				if(num_enemy >= num_player) {
-					Enemy.TakeDMG(1 * 10);
+					Enemy.TakeDMG(1 * 20);
+					DELAY = 0.5;
 				}else {
-					Enemy.TakeDMG(10 * (num_player - num_enemy));
+					Enemy.TakeDMG(20 * num_player - num_enemy);
+					DELAY = 0.5;
 				}
 				if(Enemy.getHP() > 0) {
 					num_player = 0;
 					num_enemy = 0;
 					Fighting_Turn += 1;
 				}else {
-					Map.Enemy_Alive(pos);
-					Current_Status = Status_CheckEvent;
+					Calico.setAnimation(0);
+					Enemy.setAnimation(3);
+					if(boss_event != 1) {
+						Map.Enemy_Alive(pos);
+					}else {
+						boss_event = 2;
+					}
 				}
 			}else if((Fighting_Turn % 2 == 0) && (num_player == 0) && (num_enemy == 0)) {
 				num_enemy = random.nextInt(6) + 1; // random เลข
 			}else if((Fighting_Turn % 2 == 0) && (num_player != 0) && (num_enemy != 0)) {
 				if(num_player >= num_enemy) {
+					Calico.setAnimation(2);
+					Enemy.setAnimation(1);
 					Calico.TakeDMG(1);
 				}else {
+					Calico.setAnimation(2);
+					Enemy.setAnimation(1);
 					Calico.TakeDMG(num_enemy - num_player);
 				}
 				if(Calico.getHP() > 0) {
@@ -215,23 +243,26 @@ public class PlayState extends State{
 					num_enemy = 0;
 					Fighting_Turn += 1;
 				}
-//				else {
-//					
-//				}
+				else {
+					Calico.setAnimation(3);
+				}
 			}
 			DELAY = 1;
 		}
+		
 		
 		if(Current_Status == Status_CheckEvent) {
 			
 			if(pos == 47 && current_Map == MAP_1) {
 				Event = 0;
+				Calico.setHP(50);
 				setMap(MAP_2);
 				num_player = 0;
 				pos = 1;
 				Calico.setPosition(Map.Position(pos));
 			}else if(pos == 45 && current_Map == MAP_2) {
 				Event = 0;
+				Calico.setHP(50);
 				setMap(MAP_3);
 				num_player = 0;
 				pos = 1;
@@ -250,7 +281,12 @@ public class PlayState extends State{
 			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 3) {
 				Event = 2;
 				setCutScene_group(Scene_group_5);
+			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 4) {
+				Event = 2;
+				setCutScene_group(Scene_group_6);
 			}else if(Map.CheckFight(pos)) {
+				Event = 1;
+			}else if(pos == 51 && current_Map == MAP_3 && boss_event == 1) {
 				Event = 1;
 			}else {
 				Event = 0;
@@ -263,7 +299,9 @@ public class PlayState extends State{
 				setDice_moving(0);
 				num_enemy = 0;
 				num_player = 0;
+				setEnemy(0);
 			}else if(Event == 1) {
+				Fighting_Turn = 1;
 				setEnemy(1);
 				Current_Status = Status_Fighting;
 				setDice_moving(0);
@@ -281,17 +319,17 @@ public class PlayState extends State{
 	@Override
 	public void handle() {
 		int[] Cursor = {InputManager.getCursorX(), InputManager.getCursorY()};
-		
+		float[] Dice_moving = {dice_moving.getX(), dice_moving.getY(), dice_moving.getWidth(), dice_moving.getHeight()};
 		/*Mouse is click*/
 		
 		if(InputManager.Isclick()) {
 			/*PlayerTurn*/
 			if((Current_Status == Status_PlayerTurn)) {
-				if((Cursor[0] >= dice_moving.getX() && Cursor[0] <= dice_moving.getX() + dice_moving.getWidth()) 
+				if((Cursor[0] >= Dice_moving[0] && Cursor[0] <= Dice_moving[0] + Dice_moving[2]) 
 					&& 
-			(Cursor[1] <= Gdx.graphics.getHeight() - dice_moving.getY() && Cursor[1] >= Gdx.graphics.getHeight() - dice_moving.getY() - dice_moving.getHeight())){
-//					num = random.nextInt(4) + 1; // random เลข
-					num_player = 15;
+			(Cursor[1] <= Gdx.graphics.getHeight() - Dice_moving[1] && Cursor[1] >= Gdx.graphics.getHeight() - Dice_moving[1] - Dice_moving[3])){
+//					num_player = random.nextInt(4) + 1; // random เลข
+					num_player = 40;
 					Current_Status = Status_PlayerMoving;
 					setDice_moving(num_player);
 					DELAY = 0.5;
@@ -305,9 +343,16 @@ public class PlayState extends State{
 				}else if(Scene >= CutScene.getFinal_scene()) {
 					Scene = 1;
 					if (current_Map == MAP_3 && pos == 51 && boss_event == 0) {
-						Current_Status = Status_Fighting;
+						Current_Status = Status_CheckEvent;
 						boss_event = 1;
 						Event = 1;
+					}else if(current_Map == MAP_3 && pos == 51 && (boss_event == 2 || boss_event == 3)) {
+						Current_Status = Status_CheckEvent;
+						boss_event = 4;
+						Event = 2;
+						final_s = 1;
+					}else if(boss_event == 4) {
+						gsm.setState(GameStateManager.Credit);
 					}else if(pos >= 13 && current_Map == MAP_2 && ex_s2_event == 0) {
 						ex_s2_event = 1;
 						Current_Status = Status_CheckEvent;
@@ -325,7 +370,10 @@ public class PlayState extends State{
 				if((Cursor[0] >= dice_combat[0] && Cursor[0] <= dice_combat[0] + dice_combat[2]) 
 						&& 
 				(Cursor[1] <= Gdx.graphics.getHeight() - dice_combat[1] && Cursor[1] >= Gdx.graphics.getHeight() - dice_combat[1] - dice_combat[3])){
-						if(((Fighting_Turn % 2 != 0) && (num_player == 0)) || (Fighting_Turn % 2 == 0) && (num_enemy != 0)) {
+						if((Fighting_Turn % 2 != 0) && (num_player == 0) && (num_enemy == 0)){
+							num_player = random.nextInt(6) + 1; // random เลข
+							DELAY = 0.5;
+						}else if((Fighting_Turn % 2 == 0) && (num_enemy != 0) && (num_player == 0)){
 							num_player = random.nextInt(6) + 1; // random เลข
 							DELAY = 0.5;
 						}
@@ -393,10 +441,13 @@ public class PlayState extends State{
 	}
 	
 	public void setEnemy(int num) {
-		if(num == 1) {
+		if(num == 1 && boss_event == 1) {
+			Enemy = new Theressa();
+			Enemy.init();
+		}else if(num == 1 && boss_event != 1) {
 			Enemy = new Enemy();
 			Enemy.init();
-		}else {
+		}else if(num == 0){
 			Enemy = null;
 		}
 	}

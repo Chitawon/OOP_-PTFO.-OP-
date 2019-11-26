@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Seele extends Character{
 
-	private int HP, ATK;
+	private int HP;
+	private double DELAY;
 	
 	private int[] Position_Seele;
 	private Sprite Seele_field, Seele_combat;
@@ -46,6 +47,20 @@ public class Seele extends Character{
 //		Seele_combat.setSize(84, 100);
 		Seele_combat.draw(batch);
 		
+	}
+	
+	@Override
+	public void setAnimation(int animation) {
+		// TODO Auto-generated method stub
+		if(animation == 0) {
+			
+		}else if(animation == 1) {
+			
+		}else if(animation == 2) {
+			
+		}else if(animation == 3) {
+			
+		}
 	}
 
 	@Override

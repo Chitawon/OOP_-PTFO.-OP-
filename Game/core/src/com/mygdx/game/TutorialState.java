@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.*;
 
 public class TutorialState extends State{
 	private SpriteBatch batch;
-	private Sprite startButton, b1, b2;
+	private int Current_Scene = 1;
+	private Sprite Scene;
+	private Texture Scene_1, Scene_2, Scene_3;
 	
 	public TutorialState(GameStateManager gsm) {
 		super(gsm);
@@ -15,24 +17,16 @@ public class TutorialState extends State{
 	@Override
 	public void init() {
 		batch = new SpriteBatch();
-		startButton = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
-		b1 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
-		b2 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
-		
+		Scene_1 = new Texture("CutScene/Tutorial/tutorial1.png");
+		Scene_2 = new Texture("CutScene/Tutorial/tutorial2.png");
+		Scene_3 = new Texture("CutScene/Tutorial/tutorial3.png");
+		Scene = new Sprite(Scene_1);
 	}
 	
 	@Override
 	public void draw() {
 		batch.begin();
-		startButton.setSize(300, 100);
-		b1.setSize(144, 100);
-		b2.setSize(144, 100);
-		b1.setCenter(440, 360);
-		b2.setCenter(840, 360);
-		startButton.setCenter(640, 260);
-		b1.draw(batch);
-		b2.draw(batch);
-		startButton.draw(batch);
+		Scene.draw(batch);
 		batch.end();
 	}
 	
@@ -43,15 +37,35 @@ public class TutorialState extends State{
 	
 	@Override
 	public void handle() {
+		int[] Cursor = {InputManager.getCursorX(), InputManager.getCursorY()};
 		if(InputManager.Isclick()) {
-			gsm.setState(GameStateManager.START);
+			if((Cursor[0] >= 0 && Cursor[0] <= 0 + 96) 
+					&& 
+			(Cursor[1] <= Gdx.graphics.getHeight() - 656 && Cursor[1] >= Gdx.graphics.getHeight() - 656 - 128)) {
+				gsm.setState(GameStateManager.START);
+			}else {
+				if(Current_Scene < 3) {
+					Current_Scene += 1;
+					SetCutscreen(Current_Scene);
+				}else if(Current_Scene >= 3) {
+					gsm.setState(GameStateManager.PLAY);
+				}
 			}
 		}
+	}
 	
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void SetCutscreen(int order) {
+		if(order == 2) {
+			Scene.setTexture(Scene_2);
+		}else if(order == 3) {
+			Scene.setTexture(Scene_3);
+		}
 	}
 
 }

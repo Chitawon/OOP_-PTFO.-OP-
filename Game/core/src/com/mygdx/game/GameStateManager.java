@@ -10,7 +10,7 @@ public class GameStateManager {
 	public static final int START = 1;
 	public static final int PLAY = 2;
 	public static final int TUTORIAL = 3;
-	
+	public static final int Credit = 4;
 	
 	public GameStateManager() {	
 			setState(START); // set ฉากหน้าเริ่ม
@@ -26,6 +26,8 @@ public class GameStateManager {
 			gameState = new PlayState(this); //เล่น
 		}else if (state == TUTORIAL) {
 			gameState = new TutorialState(this); //ฝึกเล่น
+		}else if (state == Credit) {
+			gameState = new EndCreditState(this); //ฝึกเล่น
 		}
 		gameState.init();
 	}

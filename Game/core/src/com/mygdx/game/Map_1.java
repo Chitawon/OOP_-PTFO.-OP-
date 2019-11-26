@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
@@ -10,14 +9,14 @@ public class Map_1 extends Map{
 	private int[] Position;
 	private int[] Enemy_Position = {5, 8, 12, 16, 22, 27, 32, 37, 41, 46};
 	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true, true};
-	private int Player_Position;
+
 	
 	public void init() {
 		Position = new int[2];
 		tm = new Texture("Background/001.png");
 		bg = new Texture("Background/BG1.png");
-		enemy_board_r = new Texture("Board/enemy_board_r.png");
-		enemy_board_l = new Texture("Board/enemy_board_l.png");
+		enemy_board_r = new Texture("Character/Board/enemy_board_r.png");
+		enemy_board_l = new Texture("Character/Board/enemy_board_l.png");
 	}
 
 	public void setPosition(int pos_x, int pos_y) {
@@ -62,7 +61,6 @@ public class Map_1 extends Map{
 	}
 
 	public int[] Position(int pos) {
-		Player_Position = pos;
 		if(pos == 1) {
 			setPosition(32, 240);
 			return Position;
