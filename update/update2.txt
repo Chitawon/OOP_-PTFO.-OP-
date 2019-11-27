@@ -1,3 +1,9 @@
+map 1 = 1 2 3 HP = 10
+map 2 = 1 2 3 HP = 10
+map 3 = 4 5 6 7
+
+
+
 1. hpbar [2 layer] 	   
 1.1 board
      1 hpbar1.png [408x40][192, 136]
@@ -44,7 +50,7 @@ tutorial.png [1312x752][0,0]
 7.1 e3_stand.png  	[225x219] [864, 240]
 7.2 e3_atk.png	  	[259x192] [896, 240]
 7.3 e3_gethit.png 	[239x211] [877, 232]
-7.4 e3_down.png	  	[240x184] [877, 240]
+7.4 e3_down.png	  	[240x184] [877, 208]
 
 8. Enemy4
 8.1 e4_stand.png  	[107x185] [960, 240]
@@ -62,7 +68,7 @@ tutorial.png [1312x752][0,0]
 10.1 e6_stand.png  	[126x213] [928, 224] 
 10.2 e6_atk.png	  	[135x197] [896, 224] 
 10.3 e6_gethit.png 	[125x184] [960, 224] 
-10.4 e6_down.png	[183x120] [896, 224] 
+10.4 e6_down.png	[190x95] [896, 224] 
 
 11. Enemy7
 11.1 e7_stand.png  	[148x214] [928, 224] 

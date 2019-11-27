@@ -7,6 +7,8 @@ public abstract class Character {
 	
 	public abstract void init();
 	
+	public abstract void init(int random);
+	
 	public abstract void draw(SpriteBatch batch);
 	
 	public abstract void update(float dt);

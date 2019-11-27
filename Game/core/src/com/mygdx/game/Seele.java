@@ -111,8 +111,10 @@ public class Seele extends Character{
 		
 	}
 
-
-
-
+	@Override
+	public void init(int random) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

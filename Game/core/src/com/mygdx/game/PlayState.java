@@ -56,9 +56,9 @@ public class PlayState extends State{
 	
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
-		setMap(MAP_1);
-		setCutScene_group(Scene_group_1);
-		Current_Status = Status_CutScene;
+		setMap(MAP_3);
+//		setCutScene_group(Scene_group_1);
+//		Current_Status = Status_CutScene;
 	}
 	
 	@Override
@@ -207,10 +207,10 @@ public class PlayState extends State{
 				Calico.setAnimation(1);
 				Enemy.setAnimation(2);
 				if(num_enemy >= num_player) {
-					Enemy.TakeDMG(1 * 20);
+					Enemy.TakeDMG(1);
 					DELAY = 0.5;
 				}else {
-					Enemy.TakeDMG(20 * num_player - num_enemy);
+					Enemy.TakeDMG(num_player - num_enemy);
 					DELAY = 0.5;
 				}
 				if(Enemy.getHP() > 0) {
@@ -301,7 +301,7 @@ public class PlayState extends State{
 				num_player = 0;
 				setEnemy(0);
 			}else if(Event == 1) {
-				Fighting_Turn = 1;
+				Fighting_Turn = random.nextInt(2) + 1;
 				setEnemy(1);
 				Current_Status = Status_Fighting;
 				setDice_moving(0);
@@ -329,7 +329,7 @@ public class PlayState extends State{
 					&& 
 			(Cursor[1] <= Gdx.graphics.getHeight() - Dice_moving[1] && Cursor[1] >= Gdx.graphics.getHeight() - Dice_moving[1] - Dice_moving[3])){
 //					num_player = random.nextInt(4) + 1; // random เลข
-					num_player = 40;
+					num_player = 1;
 					Current_Status = Status_PlayerMoving;
 					setDice_moving(num_player);
 					DELAY = 0.5;
@@ -447,6 +447,13 @@ public class PlayState extends State{
 		}else if(num == 1 && boss_event != 1) {
 			Enemy = new Enemy();
 			Enemy.init();
+			if(current_Map == MAP_1){
+				Enemy.init(random.nextInt(3) + 1);
+			}else if(current_Map == MAP_2) {
+				Enemy.init(random.nextInt(3) + 1);
+			}else if(current_Map == MAP_3) {
+				Enemy.init(random.nextInt(4) + 4);
+			}
 		}else if(num == 0){
 			Enemy = null;
 		}

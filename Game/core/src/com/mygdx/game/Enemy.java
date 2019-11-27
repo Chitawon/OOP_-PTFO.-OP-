@@ -19,13 +19,10 @@ public class Enemy extends Character{
 	private Sprite dice_combat;
 	private int[] E_stand, E_ATK, E_getHIT, E_Down;
 	private int current_animation;
-	private Random random;
 	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
-		
-		enemy = new Sprite(new Texture(Gdx.files.internal("Character/Battle/Enemy/e1_stand.png")));
 		
 		dice_combat = new Sprite(new Texture(Gdx.files.internal("Battle/dice_atk.png")));
 		
@@ -40,8 +37,7 @@ public class Enemy extends Character{
 		
 		hpbar1 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar1.png")));
 		hpbar2 = new Sprite(new Texture(Gdx.files.internal("Battle/hpbar2.png")));
-		
-		init(1);
+
 	}
 	
 	public void init(int random) {
@@ -55,61 +51,61 @@ public class Enemy extends Character{
 			E_getHIT = new int[] {928, 240, 161, 154};
 			E_Down = new int[] {928, 240, 180, 126};
 		}
-//		else if(random == 2) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}else if(random == 3) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}else if(random == 4) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}else if(random == 5) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}else if(random == 6) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}else if(random == 7) {
-//			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
-//			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
-//			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
-//			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
-//			E_stand = {};
-//			E_ATK = {};
-//			E_getHIT = {};
-//			E_Down = {};
-//		}
+		else if(random == 2) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e2_down.png"));
+			E_stand = new int[] {896, 240, 213, 200};
+			E_ATK = new int[] {896, 240, 206, 204};
+			E_getHIT = new int[] {896, 240, 236, 216};
+			E_Down = new int[] {896, 240, 226, 125};
+		}else if(random == 3) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e3_down.png"));
+			E_stand = new int[] {864, 240, 225, 219};
+			E_ATK = new int[]  {864, 240, 259, 192};
+			E_getHIT = new int[]  {877, 232, 239, 211};
+			E_Down = new int[]  {877, 208, 240, 184};
+		}else if(random == 4) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e4_down.png"));
+			E_stand = new int[] {960, 240, 107, 185};
+			E_ATK = new int[] {960, 240, 109, 178};
+			E_getHIT = new int[] {960, 240, 107, 185};
+			E_Down = new int[] {960, 240, 171, 105};
+		}else if(random == 5) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e5_down.png"));
+			E_stand = new int[] {960, 240, 109, 187};
+			E_ATK = new int[] {928, 240, 110, 175};
+			E_getHIT = new int[] {960, 240, 125, 184};
+			E_Down = new int[] {928, 220, 183, 120};
+		}else if(random == 6) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_down.png"));
+			E_stand = new int[] {928, 224, 126, 213};
+			E_ATK = new int[] {896, 224, 135, 197};
+			E_getHIT = new int[] {960, 224, 125, 184};
+			E_Down = new int[] {896, 224, 190, 95};
+		}else if(random == 7) {
+			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
+			Enemy_ATK = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_atk.png"));
+			Enemy_getHIT = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_gethit.png"));
+			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_down.png"));
+			E_stand = new int[] {928, 224, 148, 214};
+			E_ATK = new int[] {896, 224, 246, 293};
+			E_getHIT = new int[] {960, 224, 114, 210};
+			E_Down = new int[] {960, 224, 188, 106};
+		}
 		enemy = new Sprite(Enemy_stand);
 	}
 
@@ -159,8 +155,8 @@ public class Enemy extends Character{
 		hpbar2.setPosition(800, 464);
 		hpbar2.draw(batch);
 		if(current_animation == 0) {
-			enemy.setSize(149, 198);
-			enemy.setPosition(928, 240);
+			enemy.setPosition(E_stand[0], E_stand[1]);
+			enemy.setSize(E_stand[2], E_stand[3]);
 		}
 		enemy.draw(batch);
 	}

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Calico extends Character{
 
-	
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
 	private Texture skill_1_atk, skill_2_atk, skill_3_atk, skill_4_atk, skill_5_atk;
 	private Texture skill_1_def, skill_2_def, skill_3_def, skill_4_def, skill_5_def;
@@ -247,6 +246,12 @@ public class Calico extends Character{
 	public Sprite getSkill_combat() {
 		// TODO Auto-generated method stub
 		return skill_combat;
+	}
+
+	@Override
+	public void init(int random) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
