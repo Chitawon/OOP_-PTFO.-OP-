@@ -9,7 +9,6 @@ public class Map_3 extends Map{
 	private int[] Position;
 	private int[] Enemy_Position = {2, 8, 9, 16, 20, 28, 32, 35, 41, 48};
 	private boolean[] Enemy_Alive = {true, true, true, true, true, true, true, true, true, true};
-	private int Player_Position;
 	
 	public void init() {
 		Position = new int[2];
@@ -61,7 +60,6 @@ public class Map_3 extends Map{
 	}
 
 	public int[] Position(int pos) {
-		Player_Position = pos;
 		if(pos == 1) {
 			setPosition(32, 240);
 			return Position;
@@ -243,4 +241,5 @@ public class Map_3 extends Map{
 			}
 		}
 	}
+
 }

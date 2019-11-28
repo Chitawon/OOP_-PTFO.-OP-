@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Enemy extends Character{
 
-	private int HP = 5;
+	private int HP = 20;
 	private double DELAY;
 	
 	private Sprite enemy;
@@ -94,7 +94,7 @@ public class Enemy extends Character{
 			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e6_down.png"));
 			E_stand = new int[] {928, 224, 126, 213};
 			E_ATK = new int[] {896, 224, 135, 197};
-			E_getHIT = new int[] {960, 224, 125, 184};
+			E_getHIT = new int[] {960, 224, 132, 170};
 			E_Down = new int[] {896, 224, 190, 95};
 		}else if(random == 7) {
 			Enemy_stand = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_stand.png"));
@@ -103,7 +103,7 @@ public class Enemy extends Character{
 			Enemy_Down = new Texture(Gdx.files.internal("Character/Battle/Enemy/e7_down.png"));
 			E_stand = new int[] {928, 224, 148, 214};
 			E_ATK = new int[] {896, 224, 246, 293};
-			E_getHIT = new int[] {960, 224, 114, 210};
+			E_getHIT = new int[] {960, 224, 144, 204};
 			E_Down = new int[] {960, 224, 188, 106};
 		}
 		enemy = new Sprite(Enemy_stand);
@@ -134,14 +134,9 @@ public class Enemy extends Character{
 			current_animation = 3;
 		}
 
-		hpbar2.setSize(this.HP * 80, 32);
+		hpbar2.setSize(this.HP * 20, 32);
 	}
 
-	@Override
-	public void setPosition(int[] pos) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void drawCombat(SpriteBatch batch) {
@@ -228,6 +223,7 @@ public class Enemy extends Character{
 		if(HP <= 0) {
 			this.HP = 0;
 		}
+		Gdx.app.log("HP : ", this.HP + "");
 	}
 	
 	@Override
@@ -242,11 +238,6 @@ public class Enemy extends Character{
 		return dice_combat;
 	}
 
-	@Override
-	public Sprite getSkill_combat() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void setSkill_atk(int skill) {

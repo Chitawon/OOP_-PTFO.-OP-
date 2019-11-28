@@ -81,11 +81,6 @@ public class Theressa extends Character{
 		hpbar2.setSize(this.HP * 20, 32);
 	}
 
-	@Override
-	public void setPosition(int[] pos) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void drawCombat(SpriteBatch batch) {
@@ -184,12 +179,6 @@ public class Theressa extends Character{
 	public Sprite getDice_combat() {
 		// TODO Auto-generated method stub
 		return dice_combat;
-	}
-
-	@Override
-	public Sprite getSkill_combat() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

@@ -13,8 +13,6 @@ public abstract class Character {
 	
 	public abstract void update(float dt);
 	
-	public abstract void setPosition(int[] pos);
-	
 	public abstract void drawCombat(SpriteBatch batch);
 	
 	public abstract void TakeDMG(int dmg);
@@ -26,8 +24,6 @@ public abstract class Character {
 	public abstract void setDice_def(int dice_num);
 	
 	public abstract Sprite getDice_combat();
-
-	public abstract Sprite getSkill_combat();
 	
 	public abstract void setSkill_atk(int skill);
 	
