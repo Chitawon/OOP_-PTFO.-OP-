@@ -1,9 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.*;
-	
-
 public class GameStateManager {
 	private static State gameState;
 
@@ -12,8 +8,11 @@ public class GameStateManager {
 	public static final int TUTORIAL = 3;
 	public static final int Credit = 4;
 	
+	public BackgroundMusicManager bgMusic;
+	
 	public GameStateManager() {	
 			setState(START); // set ฉากหน้าเริ่ม
+			bgMusic = new BackgroundMusicManager();
 	}
 
 	public void setState(int state) {
@@ -31,7 +30,7 @@ public class GameStateManager {
 		}
 		gameState.init();
 	}
-
+	
 	public void draw() {
 		gameState.draw();
 	}

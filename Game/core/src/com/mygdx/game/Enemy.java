@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -223,7 +221,6 @@ public class Enemy extends Character{
 		if(HP <= 0) {
 			this.HP = 0;
 		}
-		Gdx.app.log("HP : ", this.HP + "");
 	}
 	
 	@Override
@@ -247,6 +244,12 @@ public class Enemy extends Character{
 
 	@Override
 	public void setSkill_def(int skill) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHP(int hP) {
 		// TODO Auto-generated method stub
 		
 	}

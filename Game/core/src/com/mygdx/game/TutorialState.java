@@ -8,7 +8,7 @@ public class TutorialState extends State{
 	private SpriteBatch batch;
 	private int Current_Scene = 1;
 	private Sprite Scene;
-	private Texture Scene_1, Scene_2, Scene_3;
+	private Texture Scene_1, Scene_2, Scene_3, Scene_4, Scene_5, Scene_6, Scene_7, Scene_8;
 	
 	public TutorialState(GameStateManager gsm) {
 		super(gsm);
@@ -20,6 +20,11 @@ public class TutorialState extends State{
 		Scene_1 = new Texture("CutScene/Tutorial/tutorial1.png");
 		Scene_2 = new Texture("CutScene/Tutorial/tutorial2.png");
 		Scene_3 = new Texture("CutScene/Tutorial/tutorial3.png");
+		Scene_4 = new Texture("CutScene/Tutorial/tutorial4.png");
+		Scene_5 = new Texture("CutScene/Tutorial/tutorial5.png");
+		Scene_6 = new Texture("CutScene/Tutorial/tutorial6.png");
+		Scene_7 = new Texture("CutScene/Tutorial/tutorial7.png");
+		Scene_8 = new Texture("CutScene/Tutorial/tutorial8.png");
 		Scene = new Sprite(Scene_1);
 	}
 	
@@ -44,11 +49,12 @@ public class TutorialState extends State{
 			(Cursor[1] <= Gdx.graphics.getHeight() - 656 && Cursor[1] >= Gdx.graphics.getHeight() - 656 - 128)) {
 				gsm.setState(GameStateManager.START);
 			}else {
-				if(Current_Scene < 3) {
+				if(Current_Scene < 8) {
 					Current_Scene += 1;
 					SetCutscreen(Current_Scene);
-				}else if(Current_Scene >= 3) {
+				}else if(Current_Scene >= 8) {
 					gsm.setState(GameStateManager.PLAY);
+					gsm.bgMusic.setMusicState(false, gsm.bgMusic.START);
 				}
 			}
 		}
@@ -65,6 +71,16 @@ public class TutorialState extends State{
 			Scene.setTexture(Scene_2);
 		}else if(order == 3) {
 			Scene.setTexture(Scene_3);
+		}else if(order == 4) {
+			Scene.setTexture(Scene_4);
+		}else if(order == 5) {
+			Scene.setTexture(Scene_5);
+		}else if(order == 6) {
+			Scene.setTexture(Scene_6);
+		}else if(order == 7) {
+			Scene.setTexture(Scene_7);
+		}else if(order == 8) {
+			Scene.setTexture(Scene_8);
 		}
 	}
 

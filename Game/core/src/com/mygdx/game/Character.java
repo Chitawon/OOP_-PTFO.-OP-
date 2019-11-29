@@ -19,6 +19,8 @@ public abstract class Character {
 	
 	public abstract int getHP();
 	
+	public abstract void setHP(int hP);
+	
 	public abstract void setDice_atk(int dice_num);
 	
 	public abstract void setDice_def(int dice_num);

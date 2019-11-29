@@ -7,15 +7,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Theressa extends Character{
 
-	private int HP = 20;
+	private int HP = 40;
 	private double DELAY;
 	
 	private Sprite teri;
-	private Texture teri_stand, teri_ATK, teri_getHIT, teri_Down;
+	private Texture teri_stand, teri_ATK, teri_getHIT, teri_Down, teri_skill1, teri_skill2;
 	private Texture dn_atk, dn_def, d1_combat, d2_combat, d3_combat, d4_combat, d5_combat, d6_combat;
 	private Sprite hpbar1, hpbar2;
 	private Sprite dice_combat;
-	private int[] E_stand, E_ATK, E_getHIT, E_Down;
+	private int[] E_stand, E_ATK, E_getHIT, E_Down, E_skill1, E_skill2;
 	private int current_animation;
 	
 	@Override
@@ -28,11 +28,15 @@ public class Theressa extends Character{
 		teri_ATK = new Texture(Gdx.files.internal("Character/Battle/Theressa/teri_atk.png"));
 		teri_getHIT = new Texture(Gdx.files.internal("Character/Battle/Theressa/teri_gethit.png"));
 		teri_Down = new Texture(Gdx.files.internal("Character/Battle/Theressa/teri_down.png"));
+		teri_skill1 = new Texture(Gdx.files.internal("Character/Battle/Theressa/teri_skill1.png"));
+		teri_skill2 = new Texture(Gdx.files.internal("Character/Battle/Theressa/teri_skill2.png"));
 		
 		E_stand = new int[] {928, 240, 153, 206};
 		E_ATK = new int[] {832, 240, 233, 199};
 		E_getHIT = new int[] {928, 240, 147, 216};
 		E_Down = new int[] {928, 203, 203, 124};
+		E_skill1 = new int[] {896, 240, 182, 209};
+		E_skill2 = new int[] {768, 208, 276, 243};
 		
 		dice_combat = new Sprite(new Texture(Gdx.files.internal("Battle/dice_atk.png")));
 		
@@ -78,7 +82,7 @@ public class Theressa extends Character{
 			current_animation = 3;
 		}
 
-		hpbar2.setSize(this.HP * 20, 32);
+		hpbar2.setSize(this.HP * 10, 32);
 	}
 
 
@@ -119,6 +123,14 @@ public class Theressa extends Character{
 			teri.setPosition(E_Down[0], E_Down[1]);
 			teri.setSize(E_Down[2], E_Down[3]);
 			teri.setTexture(teri_Down);
+		}else if(animation == 4) {
+			teri.setPosition(E_skill1[0], E_skill1[1]);
+			teri.setSize(E_skill1[2], E_skill1[3]);
+			teri.setTexture(teri_skill1);
+		}else if(animation == 5) {
+			teri.setPosition(E_skill2[0], E_skill2[1]);
+			teri.setSize(E_skill2[2], E_skill2[3]);
+			teri.setTexture(teri_skill2);
 		}
 		DELAY = 1;
 		current_animation = animation;
@@ -173,6 +185,14 @@ public class Theressa extends Character{
 	public int getHP() {
 		// TODO Auto-generated method stub
 		return this.HP;
+	}
+	
+	@Override
+	public void setHP(int hP) {
+		HP = hP;
+		if(HP >= 40) {
+			HP = 40;
+		}
 	}
 
 	@Override

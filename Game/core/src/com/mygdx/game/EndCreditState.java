@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class EndCreditState extends State{
 	private SpriteBatch batch;
 	private Texture Credit;
+	private int Scene = 1;
+	private CutScene CutScene = new CutScene_EX_EndCredit();
 	
 	public EndCreditState(GameStateManager gsm) {
 		super(gsm);
@@ -16,6 +18,7 @@ public class EndCreditState extends State{
 	public void init() {
 		// TODO Auto-generated method stub
 		batch = new SpriteBatch();
+		CutScene.init();
 		Credit = new Texture("CutScene/Credit/credit.png");
 	}
 
@@ -23,7 +26,11 @@ public class EndCreditState extends State{
 	public void draw() {
 		// TODO Auto-generated method stub
 		batch.begin();
-		batch.draw(Credit, 0, 0);
+		if(Scene == 1) {
+			batch.draw(Credit, 0, 0);
+		}else {
+			CutScene.draw(batch);
+		}
 		batch.end();
 	}
 
@@ -37,7 +44,12 @@ public class EndCreditState extends State{
 	public void handle() {
 		// TODO Auto-generated method stub
 		if(InputManager.Isclick()) {
-			gsm.setState(GameStateManager.START);
+			if(Scene < CutScene.getFinal_scene()) {
+				Scene += 1;
+				CutScene.SetCutscreen(Scene);
+			}else if(Scene >= CutScene.getFinal_scene()) {
+				gsm.setState(GameStateManager.START);
+			}
 		}
 	}
 

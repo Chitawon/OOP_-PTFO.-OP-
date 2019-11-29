@@ -14,7 +14,7 @@ public class Calico extends Character{
 	private Sprite skill_field;
 	private Sprite hpbar1, hpbar2;
 	private Sprite dice_combat, skill_combat;
-	private int HP = 50;
+	private int HP = 40;
 	public int skill_player = 1;
 	private int current_animation;
 	private double DELAY;
@@ -107,7 +107,7 @@ public class Calico extends Character{
 			current_animation = 0;
 		}
 		
-		hpbar2.setSize(this.HP * 8, 32);
+		hpbar2.setSize(this.HP * 10, 32);
 		
 	}
 
@@ -144,7 +144,6 @@ public class Calico extends Character{
 	@Override
 	public void TakeDMG(int dmg) {
 		this.HP -= dmg;
-		Gdx.app.log("HP : ", this.HP + "");
 	}
 	
 	@Override
@@ -155,10 +154,9 @@ public class Calico extends Character{
 
 	public void setHP(int hP) {
 		HP = hP;
-		if(HP >= 50) {
-			HP = 50;
+		if(HP >= 40) {
+			HP = 40;
 		}
-		Gdx.app.log("HP : ", this.HP + "");
 	}
 
 	@Override
@@ -270,14 +268,14 @@ public class Calico extends Character{
 	}
 	
 	public boolean getSkill_available(int skill) {
-		if(skill_available[skill]) {
-			return skill_available[skill];
+		if(skill_available[skill - 1]) {
+			return skill_available[skill - 1];
 		}
 		return false;
 	}
 
 	public void setSkill_available(int skill) {
-		skill_available[skill] = true;
+		skill_available[skill - 1] = true;
 	}
 
 	@Override

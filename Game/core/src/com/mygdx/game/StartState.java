@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;	
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.*;
 
@@ -20,7 +20,6 @@ public class StartState extends State{
 		btn1 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
 		btn2 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
 		btn3 = new Sprite(new Texture(Gdx.files.internal("Background/Untitled.png")));
-
 	}
 	
 	@Override
@@ -39,6 +38,7 @@ public class StartState extends State{
 		btn3.draw(batch);
 		gametitle.draw(batch);
 		batch.end();
+		gsm.bgMusic.play(gsm.bgMusic.START);
 	}
 	
 	@Override
@@ -57,6 +57,7 @@ public class StartState extends State{
 		(y <= Gdx.graphics.getHeight() - btn1.getY() && y >= Gdx.graphics.getHeight() - btn1.getY() - btn1.getHeight())){
 				dispose();
 				gsm.setState(GameStateManager.PLAY);
+				gsm.bgMusic.setMusicState(false, gsm.bgMusic.START);
 			}
 			/*TUTORIAL*/
 			else if((x >= btn2.getX() && x <= btn2.getX() + btn2.getWidth()) 

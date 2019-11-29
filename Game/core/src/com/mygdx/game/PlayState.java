@@ -10,8 +10,8 @@ public class PlayState extends State{
 	private SpriteBatch batch;
 	
 	private Texture icon, dn, d1, d2, d3, d4;
-	private Sprite weapon_1, weapon_2, weapon_3, weapon_4, weapon_5;
-	private Sprite Bag, hpbar1, hpbar2;
+	private Sprite Bag, backpack_bar, hpbar1, hpbar2;
+	private Texture bp0, bp1_1, bp1_2, bp2_1, bp2_2, bp2_3;
 	private Sprite dice_moving;
 	
 	private Random random;
@@ -24,10 +24,12 @@ public class PlayState extends State{
 	
 	private CutScene CutScene;
 	
-	private float[][] weapon;
-	private int num_player = 0, position_player = 1, pos_e = 1, current_Map, Stpe_moving, Scene = 1, num_enemy = 0, final_s = 0;
+	private int[][] weapon;
+	private int num_player = 0, position_player = 1, pos_e = 1, current_Map, Stpe_moving, Scene = 1, num_enemy = 0;
+	private int boss_skill1, boss_skill2;
 	private int Event = 0; // 0 = ไม่มี, 1 = สู้, 2 = CutScene, 3 = เปลี่ยน map
-//	private int sp_event = 30; // เกิด Scene_group_7
+	private int sp_event = 10;// เกิด Scene_group_7
+	private	float time = 0; 
 	private int ex_s2_event = 0, countdown_e = 0; // เกิด ex_s2
 	private int boss_event = 0; // เกิด boss event (CutScene, สู้)
 	private boolean open_bag = false;
@@ -61,6 +63,7 @@ public class PlayState extends State{
 		setMap(MAP_1);
 		setCutScene_group(Scene_group_1);
 		Current_Status = Status_CutScene;
+		gsm.bgMusic.play(gsm.bgMusic.MAP_1n2);
 	}
 	
 	@Override
@@ -75,12 +78,14 @@ public class PlayState extends State{
 		hpbar2 = new Sprite(new Texture(Gdx.files.internal("UI/hpbar2.png")));
 		
 		Bag = new Sprite(new Texture(Gdx.files.internal("UI/BP.png")));
+		bp0 = new Texture("UI/bp0.png");
+		bp1_1 = new Texture("UI/bp1_1.png");
+		bp1_2 = new Texture("UI/bp1_2.png");
+		bp2_1 = new Texture("UI/bp2_1.png");
+		bp2_2 = new Texture("UI/bp2_2.png");
+		bp2_3 = new Texture("UI/bp2_3.png");
+		backpack_bar = new Sprite(bp0);
 		
-//		weapon_1 = new Sprite(new Texture(Gdx.files.internal("UI/dagger_icon.png")));
-//		weapon_2 = new Sprite(new Texture(Gdx.files.internal("UI/pistol_icon.png")));
-//		weapon_3 = new Sprite(new Texture(Gdx.files.internal("UI/sniper_icon.png")));
-//		weapon_4 = new Sprite(new Texture(Gdx.files.internal("UI/dagger_icon.png")));
-//		weapon_5 = new Sprite(new Texture(Gdx.files.internal("UI/dagger_icon.png")));
 		
 		dn = new Texture("UI/dice_walk.png");
 		d1 = new Texture("UI/d1.png");
@@ -100,58 +105,39 @@ public class PlayState extends State{
 		/*Seele*/
 		Seele = new Seele();
 		Seele.init();
-//		
-//		float[][] weapon = new float[5][];
-//		weapon[0] = new float[] {weapon_1.getX(), weapon_1.getY(), weapon_1.getWidth(), weapon_1.getHeight()};
-//		weapon[1] = new float[] {weapon_2.getX(), weapon_2.getY(), weapon_2.getWidth(), weapon_2.getHeight()};
-//		weapon[2] = new float[] {weapon_3.getX(), weapon_3.getY(), weapon_3.getWidth(), weapon_3.getHeight()};
-//		weapon[3] = new float[] {weapon_4.getX(), weapon_4.getY(), weapon_4.getWidth(), weapon_4.getHeight()};
-//		weapon[4] = new float[] {weapon_5.getX(), weapon_5.getY(), weapon_5.getWidth(), weapon_5.getHeight()};
+		
+		weapon = new int[][] {{496, 64, 96, 96}, {608, 64, 96, 96}, {720, 64, 96, 96}, {832, 64, 96, 96}, {944, 64, 96, 96}};
 }
 	
 	@Override
 	public void draw() {
 		batch.begin();
-		if(final_s == 0) {
-			/* Map */
-			Map.draw(batch);
+		/* Map */
+		Map.draw(batch);
 
-			/* UI */
-			batch.draw(icon, 32, 16, 128, 160);
-			Bag.setPosition(448, 16);
-			Bag.setSize(96, 96);
-			Bag.draw(batch);
-			hpbar1.setSize(408, 40);
-			hpbar1.setPosition(192, 136);
-			hpbar1.draw(batch);
-			hpbar2.setPosition(196, 140);
-			hpbar2.draw(batch);
-			dice_moving.setPosition(320, 16);
-			dice_moving.setSize(96, 96);
-			dice_moving.draw(batch);
+		/* UI */
+		batch.draw(icon, 32, 16, 128, 160);
+		Bag.setPosition(448, 16);
+		Bag.setSize(96, 96);
+		Bag.draw(batch);
+		hpbar1.setSize(408, 40);
+		hpbar1.setPosition(192, 136);
+		hpbar1.draw(batch);
+		hpbar2.setPosition(196, 140);
+		hpbar2.draw(batch);
+		dice_moving.setPosition(320, 16);
+		dice_moving.setSize(96, 96);
+		dice_moving.draw(batch);
 			
-//			/*Weapon*/
-//			if(open_bag == true) {
-//				weapon_1.setPosition(448, 16);
-//				weapon_1.setSize(96, 96);
-//				weapon_1.draw(batch);
-//				weapon_2.setPosition(448, 16);
-//				weapon_2.setSize(96, 96);
-//				weapon_2.draw(batch);
-//				weapon_3.setPosition(448, 16);
-//				weapon_3.setSize(96, 96);
-//				weapon_3.draw(batch);
-//				weapon_4.setPosition(448, 16);
-//				weapon_4.setSize(96, 96);
-//				weapon_4.draw(batch);
-//				weapon_5.setPosition(448, 16);
-//				weapon_5.setSize(96, 96);
-//				weapon_5.draw(batch);
-//			}
-			
-			/*Player*/
-			Calico.draw(batch);
+		/*Weapon*/
+		if(open_bag == true) {
+			backpack_bar.setSize(576, 128);
+			backpack_bar.setPosition(480, 48);
+			backpack_bar.draw(batch);
 		}
+			
+		/*Player*/
+		Calico.draw(batch);
 		
 		if(ex_s2_event != 0) {
 			Seele.draw(batch);
@@ -168,8 +154,8 @@ public class PlayState extends State{
 	@Override
 	public void update(float dt) {
 		handle();
-
-		hpbar2.setSize(Calico.getHP() * 8, 32);
+		setBackpackbar();
+		hpbar2.setSize(Calico.getHP() * 10, 32);
 		
 		if(Current_Status == Status_PlayerMoving || Current_Status == Status_CheckEvent || Current_Status == Status_Fighting || Current_Status == Status_EnemyMoving) {
 			DELAY -= dt;
@@ -242,16 +228,15 @@ public class PlayState extends State{
 			}else if((Fighting_Turn % 2 == 0) && (num_enemy != 0)){
 				Enemy.setDice_def(num_enemy);
 			}
-
 			Calico.update(dt);
 			Enemy.update(dt);
 		}
 		
 		if(Current_Status == Status_Fighting && DELAY <= 0) {
-			if(Enemy.getHP() <= 0 || (Map.CheckFight(position_player) == false)) {
+			if(Enemy.getHP() <= 0 || (Map.CheckFight(position_player) == false) || (Calico.getHP() <= 0)) {
 				Current_Status = Status_CheckEvent;
 			}
-		}
+		}	
 		
 		/*Fighting*/
 		
@@ -262,46 +247,86 @@ public class PlayState extends State{
 				Calico.setAnimation(1);
 				Enemy.setAnimation(2);
 				if(Calico.skill_player == 1) {
-					if(num_enemy >= num_player) {
-						Enemy.TakeDMG(1);
-						DELAY = 0.5;
+					if(boss_skill1 >= 6) {
+						Enemy.setHP(Enemy.getHP() + num_enemy);
+						Enemy.setAnimation(4);
+						boss_skill1 = -1;
 					}else {
-						Enemy.TakeDMG((num_player - num_enemy) * 2);
-						DELAY = 0.5;
+						if(num_enemy >= num_player) {
+							Enemy.TakeDMG(1);
+							DELAY = 0.5;
+						}else {
+							Enemy.TakeDMG((num_player - num_enemy) * 2);
+							DELAY = 0.5;
+						}
 					}
+
 				}else if(Calico.skill_player == 2) {
-					if(num_enemy >= num_player * 2) {
-						Enemy.TakeDMG(1);
-						DELAY = 0.5;
+					if(boss_skill1 >= 6) {
+						Enemy.setHP(Enemy.getHP() + num_enemy);
+						Enemy.setAnimation(4);
+						boss_skill1 = -1;
 					}else {
-						Enemy.TakeDMG((num_player * 2) - num_enemy);
-						DELAY = 0.5;
+						if(num_enemy >= num_player * 2) {
+							Enemy.TakeDMG(1);
+							DELAY = 0.5;
+						}else {
+							Enemy.TakeDMG((num_player * 2) - num_enemy);
+							DELAY = 0.5;
+						}
 					}
+
 				}else if(Calico.skill_player == 3) {
-					if(num_enemy >= num_player) {
-						Enemy.TakeDMG(5);
-						DELAY = 0.5;
+					if(boss_skill1 >= 6) {
+						Enemy.setHP(Enemy.getHP() + num_enemy);
+						Enemy.setAnimation(4);
+						boss_skill1 = -1;
 					}else {
-						Enemy.TakeDMG((num_player + 5) - num_enemy);
-						DELAY = 0.5;
+						if(num_enemy >= num_player) {
+							Enemy.TakeDMG(5);
+							DELAY = 0.5;
+						}else {
+							Enemy.TakeDMG((num_player + 5) - num_enemy);
+							DELAY = 0.5;
+						}
 					}
+
 				}else if(Calico.skill_player == 4) {
-					if(num_enemy >= num_player) {
-						Enemy.TakeDMG(3);
-						DELAY = 0.5;
+					if(boss_skill1 >= 6) {
+						Enemy.setHP(Enemy.getHP() + num_enemy);
+						Enemy.setAnimation(4);
+						boss_skill1 = -1;
 					}else {
-						Enemy.TakeDMG((num_player * 3) - num_enemy);
-						DELAY = 0.5;
+						if(num_enemy >= num_player) {
+							Enemy.TakeDMG(3);
+							DELAY = 0.5;
+						}else {
+							Enemy.TakeDMG((num_player * 3) - num_enemy);
+							DELAY = 0.5;
+						}						
 					}
+
 				}else if(Calico.skill_player == 5) {
-					if(num_enemy >= num_player) {
-						Enemy.TakeDMG(2);
-						DELAY = 0.5;
+					if(boss_skill1 >= 6) {
+						Enemy.setHP(Enemy.getHP() + num_enemy);
+						Enemy.setAnimation(4);
+						boss_skill1 = -1;
 					}else {
-						Enemy.TakeDMG((num_player + 2) - num_enemy);
-						DELAY = 0.5;
+						if(num_enemy >= num_player) {
+							Enemy.TakeDMG(2);
+							DELAY = 0.5;
+						}else {
+							Enemy.TakeDMG((num_player + 2) - num_enemy);
+							DELAY = 0.5;
+						}
 					}
 				}
+
+				if(boss_event == 1) {
+					boss_skill1 += 1;
+				}
+				
+				
 				if(Enemy.getHP() > 0) {
 					num_player = 0;
 					num_enemy = 0;
@@ -311,67 +336,112 @@ public class PlayState extends State{
 					Enemy.setAnimation(3);
 					if(boss_event != 1) {
 						Map.Enemy_Alive(position_player);
-					}else {
+					}else if(boss_event == 1){
 						boss_event = 2;
+						Map.Enemy_Alive(position_player);
 					}
 				}
-				
 				
 			}else if((Fighting_Turn % 2 == 0) && (num_player == 0) && (num_enemy == 0)) {
 				num_enemy = random.nextInt(6) + 1; // random เลข
 			}else if((Fighting_Turn % 2 == 0) && (num_player != 0) && (num_enemy != 0)) {
 				Calico.setAnimation(2);
 				Enemy.setAnimation(1);
+				
 				if(Calico.skill_player == 1) {
-					if(num_player >= num_enemy) {
-						Calico.setHP(Calico.getHP() + 1);
-						DELAY = 0.5;
+					if(boss_skill2 >= 3) {
+						Calico.TakeDMG(num_enemy * 2);
+						Enemy.setAnimation(5);
+						boss_skill2 = -1;
 					}else {
-						Calico.TakeDMG(num_enemy - num_player);
-						DELAY = 0.5;
+						if(num_player >= num_enemy) {
+							Calico.setHP(Calico.getHP() + 1);
+							DELAY = 0.5;
+						}else {
+							Calico.TakeDMG(num_enemy - num_player);
+							DELAY = 0.5;
+						}
 					}
+					
 				}else if(Calico.skill_player == 2) {
-					if(num_player >= num_enemy) {
-						Enemy.TakeDMG(num_player - num_enemy);
-						Calico.TakeDMG(1);
-						DELAY = 0.5;
-						
+					if(boss_skill2 >= 3) {
+						Calico.TakeDMG(num_enemy * 2);
+						Enemy.setAnimation(5);
+						boss_skill2 = -1;
 					}else {
-						Calico.TakeDMG(num_enemy - num_player);
-						DELAY = 0.5;
+						if(num_player >= num_enemy) {
+							Enemy.TakeDMG(num_player - num_enemy);
+							Calico.TakeDMG(1);
+							DELAY = 0.5;
+							
+						}else {
+							Calico.TakeDMG(num_enemy - num_player);
+							DELAY = 0.5;
+						}
 					}
 				}else if(Calico.skill_player == 3) {
-					if(num_player >= num_enemy) {
-						Calico.TakeDMG(1);
-						DELAY = 0.5;		
+					if(boss_skill2 >= 3) {
+						Calico.TakeDMG(num_enemy * 2);
+						Enemy.setAnimation(5);
+						boss_skill2 = -1;
 					}else {
-						Calico.TakeDMG(num_enemy - num_player);
+						if(num_player >= num_enemy) {
+							Calico.TakeDMG(1);
+							DELAY = 0.5;		
+						}else {
+							Calico.TakeDMG(num_enemy - num_player);
+							DELAY = 0.5;
+						}
+					}
+					
+				}else if(Calico.skill_player == 4) {
+					if(boss_skill2 >= 3) {
+						Calico.TakeDMG(num_enemy * 2);
+						Enemy.setAnimation(5);
+						boss_skill2 = -1;
+					}else {
+						Calico.TakeDMG(1);
 						DELAY = 0.5;
 					}
-				}else if(Calico.skill_player == 4) {
-					Calico.TakeDMG(1);
-					DELAY = 0.5;
 				}else if(Calico.skill_player == 5) {
-					Calico.TakeDMG(1);
-					Calico.setAnimation(0);
-					Enemy.setAnimation(0);
-					Map.Enemy_Alive(position_player);
-					if(boss_event == 1) {
-						boss_event = 3;
+					if(boss_skill2 >= 3) {
+						Calico.TakeDMG(num_enemy * 2);
+						Enemy.setAnimation(5);
+						boss_skill2 = -1;
+					}else {
+						Calico.TakeDMG(1);
+						Calico.setAnimation(0);
+						Enemy.setAnimation(0);
+						Map.Enemy_Alive(position_player);
+						if(boss_event == 1) {
+							boss_event = 3;
+						}
 					}
 				}
+				
+				if(boss_event == 1) {
+					boss_skill2 += 1;
+				}
+				
 				if(Calico.getHP() > 0) {
 					num_player = 0;
 					num_enemy = 0;
 					Fighting_Turn += 1;
-				}else if(Enemy.getHP() <= 0) {
-					Calico.setAnimation(0);
-					Enemy.setAnimation(3);
-					Map.Enemy_Alive(position_player);
 				}else {
 					Calico.setAnimation(3);
-					Current_Status = Status_CheckEvent;
 				}
+				
+				if(Enemy.getHP() <= 0) {
+					Calico.setAnimation(0);
+					Enemy.setAnimation(3);
+					if(boss_event != 1) {
+						Map.Enemy_Alive(position_player);
+					}else if(boss_event == 1){
+						boss_event = 2;
+						Map.Enemy_Alive(position_player);
+					}
+				}
+				
 			}
 			DELAY = 1;
 		}
@@ -379,7 +449,7 @@ public class PlayState extends State{
 		/*Seele*/
 		
 		if(Current_Status == Status_EnemyTurn) {
-			num_enemy = random.nextInt(4) + 1;
+			num_enemy = random.nextInt(5) + 2;
 			Current_Status = Status_EnemyMoving;
 			DELAY = 0.5;
 			
@@ -410,55 +480,37 @@ public class PlayState extends State{
 			}
 		}
 		
+		/*Secret Cutscene*/
+		if(Current_Status == Status_PlayerTurn && position_player == 1 && current_Map == MAP_1 && (Calico.getSkill_available(5) == false)) {
+			time += dt;
+			if (time >= 1) {
+				time = 0;
+				sp_event -= 1;
+			}
+			if (sp_event <= 0) {
+				sp_event = 0;
+				Current_Status = Status_CheckEvent;
+			}
+		}
+		
 		
 		/*CheckEvent*/
 		
 		if(Current_Status == Status_CheckEvent) {
 			
 			if(position_player == 47 && current_Map == MAP_1) {
-				Event = 0;
-				Calico.setHP(50);
 				setMap(MAP_2);
-				num_player = 0;
-				position_player = 1;
-				Calico.setPosition_Calico(Map.Position(position_player));
+				Calico.setSkill_available(3);
 			}else if(position_player == 45 && current_Map == MAP_2) {
-				Event = 0;
-				Calico.setHP(50);
-				setMap(MAP_3);
-				num_player = 0;
-				position_player = 1;
-				pos_e = 0;
+				setMap(MAP_3);	
+				Calico.setSkill_available(4);
 				ex_s2_event = 0;
-				Calico.setPosition_Calico(Map.Position(position_player));
 			}
 			
-			if(current_Map == MAP_1 && Calico.getHP() <= 0) {
-				Event = 0;
-				Calico.setHP(50);
-				setMap(MAP_1);
-				num_player = 0;
-				position_player = 1;
-				Calico.setPosition_Calico(Map.Position(position_player));
-			}else if(current_Map == MAP_2 && Calico.getHP() <= 0) {
-				Event = 0;
-				Calico.setHP(50);
-				setMap(MAP_2);
-				num_player = 0;
-				position_player = 1;
-				pos_e = 0;
-				ex_s2_event = 0;
-				Calico.setPosition_Calico(Map.Position(position_player));
-			}else if(current_Map == MAP_3 && Calico.getHP() <= 0) {
-				Event = 0;
-				Calico.setHP(50);
-				setMap(MAP_3);
-				num_player = 0;
-				position_player = 1;
-				Calico.setPosition_Calico(Map.Position(position_player));
+			if(Calico.getHP() <= 0) {
+				setMap(current_Map);
 			}
-			
-			
+	
 			if(position_player >= 13 && current_Map == MAP_2 && ex_s2_event == 0) {
 				Event = 2;
 				setCutScene_group(Scene_group_2);
@@ -473,9 +525,10 @@ public class PlayState extends State{
 				setCutScene_group(Scene_group_5);
 			}
 			/*sp cut*/
-//			else if() {
-//
-//			}
+			else if(position_player == 1 && current_Map == MAP_1 && sp_event <= 0 && (Calico.getSkill_available(5) == false)) {
+				Event = 2;
+				setCutScene_group(Scene_group_6);
+			}
 			else if(Map.CheckFight(position_player)) {
 				if(Calico.skill_player == 1 && (num_player == 1 || num_player == 2) && boss_event == 0) {
 					Event = 0;
@@ -502,6 +555,12 @@ public class PlayState extends State{
 				num_enemy = 0;
 				num_player = 0;
 				setEnemy(0);
+				gsm.bgMusic.setMusicState(false, gsm.bgMusic.Battle);
+				if(current_Map == MAP_1 || current_Map == MAP_2) {
+					gsm.bgMusic.setMusicState(true, gsm.bgMusic.MAP_1n2);
+				}else if(current_Map == MAP_3) {
+					gsm.bgMusic.setMusicState(true, gsm.bgMusic.MAP_3);
+				}
 			}else if(Event == 1) {
 				setEnemy(1);
 				if(Calico.skill_player == 4) {
@@ -516,11 +575,18 @@ public class PlayState extends State{
 				setDice_moving(0);
 				num_enemy = 0;
 				num_player = 0;
+				gsm.bgMusic.setMusicState(true, gsm.bgMusic.Battle);
+				if(current_Map == MAP_1 || current_Map == MAP_2) {
+					gsm.bgMusic.setMusicState(false, gsm.bgMusic.MAP_1n2);
+				}else if(current_Map == MAP_3) {
+					gsm.bgMusic.setMusicState(false, gsm.bgMusic.MAP_3);
+				}
 			}else if(Event == 2) {
 				Current_Status = Status_CutScene;
 				setDice_moving(0);
 				num_enemy = 0;
 				num_player = 0;
+				gsm.bgMusic.setMusicState(false, gsm.bgMusic.Battle);
 			}else if(Event == 3) {
 				Current_Status = Status_EnemyTurn;
 				setDice_moving(0);
@@ -529,7 +595,7 @@ public class PlayState extends State{
 			}
 		}
 	}
-	
+
 	@Override
 	public void handle() {
 		int[] Cursor = {InputManager.getCursorX(), InputManager.getCursorY()};
@@ -539,62 +605,77 @@ public class PlayState extends State{
 		
 		if(InputManager.Isclick()) {
 			/*PlayerTurn*/
-			if((Current_Status == Status_PlayerTurn)) {
+			if(Current_Status == Status_PlayerTurn) {
 				if((Cursor[0] >= Dice_moving[0] && Cursor[0] <= Dice_moving[0] + Dice_moving[2]) 
 					&& 
 			(Cursor[1] <= Gdx.graphics.getHeight() - Dice_moving[1] && Cursor[1] >= Gdx.graphics.getHeight() - Dice_moving[1] - Dice_moving[3])){
-//					num_player = random.nextInt(4) + 1; // random เลข
-					num_player = 4;
+					num_player = random.nextInt(4) + 1; // random เลข
 					Current_Status = Status_PlayerMoving;
 					setDice_moving(num_player);
 					if(Calico.skill_player == 2) {
 						num_player += 2;
 					}
+					open_bag = false;
 					DELAY = 0.5;
 				}
-//				/*Bag*/
-//				else if((Cursor[0] >= bag_postion[0] && Cursor[0] <= bag_postion[0] + bag_postion[3]) 
-//						&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - bag_postion[1] && Cursor[1] >= Gdx.graphics.getHeight() - bag_postion[1] - bag_postion[4])) {
-//					if(open_bag == false) {
-//						open_bag = true;
-//					}else if(open_bag == true) {
-//						open_bag = false;
-//					}
-//				}
-//				/*Change Skill*/
-//				else if(open_bag == true) {
-//					/*Weapon 1*/
-//					if((Cursor[0] >= weapon[0][0] && Cursor[0] <= weapon[0][0] + weapon[0][3]) 
-//							&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - weapon[0][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[0][1] - weapon[0][4])) {
-//						Calico.setSkill_field(1);
-//					}
-//					/*Weapon 2*/
-//					else if((Cursor[0] >= weapon[1][0] && Cursor[0] <= weapon[1][0] + weapon[1][3]) 
-//							&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - weapon[1][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[1][1] - weapon[1][4])) {
-//						Calico.setSkill_field(2);
-//					}
-//					/*Weapon 3*/
-//					else if((Cursor[0] >= weapon[2][0] && Cursor[0] <= weapon[2][0] + weapon[2][3]) 
-//							&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - weapon[2][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[2][1] - weapon[2][4])) {
-//						Calico.setSkill_field(3);
-//					}
-//					/*Weapon 4*/
-//					else if((Cursor[0] >= weapon[3][0] && Cursor[0] <= weapon[3][0] + weapon[3][3]) 
-//							&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - weapon[3][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[3][1] - weapon[3][4])) {
-//						Calico.setSkill_field(4);
-//					}
-//					/*Weapon 5*/
-//					else if((Cursor[0] >= weapon[4][0] && Cursor[0] <= weapon[4][0] + weapon[4][3]) 
-//							&& 
-//				(Cursor[1] <= Gdx.graphics.getHeight() - weapon[4][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[4][1] - weapon[4][4])) {
-//						Calico.setSkill_field(5);
-//					}
-//				}
+				/*Change Skill*/
+				else if(open_bag == true) {
+					/*Weapon 1*/
+					if((Cursor[0] >= weapon[0][0] && Cursor[0] <= weapon[0][0] + weapon[0][2]) 
+							&& 
+					   (Cursor[1] <= Gdx.graphics.getHeight() - weapon[0][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[0][1] - weapon[0][3])
+					   		&& 
+					   Calico.getSkill_available(1)) {
+						Calico.setSkill_field(1);
+						open_bag = false;
+					}
+					/*Weapon 2*/
+					else if((Cursor[0] >= weapon[1][0] && Cursor[0] <= weapon[1][0] + weapon[1][2]) 
+							&& 
+						(Cursor[1] <= Gdx.graphics.getHeight() - weapon[1][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[1][1] - weapon[1][3])
+							&& 
+						Calico.getSkill_available(2)) {
+						Calico.setSkill_field(2);
+						open_bag = false;
+					}
+					/*Weapon 3*/
+					else if((Cursor[0] >= weapon[2][0] && Cursor[0] <= weapon[2][0] + weapon[2][2]) 
+							&& 
+						(Cursor[1] <= Gdx.graphics.getHeight() - weapon[2][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[2][1] - weapon[2][3])
+							&& 
+						Calico.getSkill_available(3)) {
+						Calico.setSkill_field(3);
+						open_bag = false;
+					}
+					/*Weapon 4*/
+					else if((Cursor[0] >= weapon[3][0] && Cursor[0] <= weapon[3][0] + weapon[3][2]) 
+							&& 
+						(Cursor[1] <= Gdx.graphics.getHeight() - weapon[3][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[3][1] - weapon[3][3])
+							&& 
+						Calico.getSkill_available(4)) {
+						Calico.setSkill_field(4);
+						open_bag = false;
+					}
+					/*Weapon 5*/
+					else if((Cursor[0] >= weapon[4][0] && Cursor[0] <= weapon[4][0] + weapon[4][2]) 
+							&& 
+						(Cursor[1] <= Gdx.graphics.getHeight() - weapon[4][1] && Cursor[1] >= Gdx.graphics.getHeight() - weapon[4][1] - weapon[4][3])
+							&& 
+						Calico.getSkill_available(5)) {
+						Calico.setSkill_field(5);
+						open_bag = false;
+					}
+				}
+				/*Bag*/
+				else if((Cursor[0] >= bag_postion[0] && Cursor[0] <= bag_postion[0] + bag_postion[2]) 
+						&& 
+				(Cursor[1] <= Gdx.graphics.getHeight() - bag_postion[1] && Cursor[1] >= Gdx.graphics.getHeight() - bag_postion[1] - bag_postion[3])) {
+					if(open_bag == false) {
+						open_bag = true;
+					}else if(open_bag == true) {
+						open_bag = false;
+					}
+				}
 			}
 			/* CutScene */
 			else if(Current_Status == Status_CutScene) {
@@ -610,13 +691,21 @@ public class PlayState extends State{
 					}else if(current_Map == MAP_3 && position_player == 51 && (boss_event == 2 || boss_event == 3)) {
 						Current_Status = Status_CheckEvent;
 						Event = 2;
-						final_s = 1;
 						gsm.setState(GameStateManager.Credit);
+						gsm.bgMusic.setMusicState(false, gsm.bgMusic.Battle);
+						gsm.bgMusic.setMusicState(false, gsm.bgMusic.MAP_3);
+						gsm.bgMusic.setMusicState(true, gsm.bgMusic.START);
 					}else if(position_player >= 13 && current_Map == MAP_2 && ex_s2_event == 0) {
 						ex_s2_event = 1;
 						Current_Status = Status_CheckEvent;
 						Event = 3;
-					}else {
+					}
+					else if(position_player == 1 && current_Map == MAP_1 && sp_event <= 0 && (Calico.getSkill_available(5) == false)) {
+						Calico.setSkill_available(5);
+						Current_Status = Status_CheckEvent;
+						Event = 0;
+					}
+					else {
 						Event = 0;
 						Current_Status = Status_CheckEvent;
 					}
@@ -661,13 +750,25 @@ public class PlayState extends State{
 	public void setMap(int map) {
 		if(map == MAP_1) {
 			Map = new Map_1();
+			gsm.bgMusic.play(gsm.bgMusic.MAP_1n2);
 		}else if(map == MAP_2) {
 			Map = new Map_2();
+			gsm.bgMusic.play(gsm.bgMusic.MAP_1n2);
 		}else if(map == MAP_3) {
 			Map = new Map_3();
+			gsm.bgMusic.setMusicState(false, gsm.bgMusic.MAP_1n2);
+			gsm.bgMusic.play(gsm.bgMusic.MAP_3);
 		}
 		current_Map = map;
 		Map.init();
+		if(Calico != null) {
+			Event = 0;
+			Calico.setHP(40);
+			num_player = 0;
+			position_player = 1;
+			Calico.setPosition_Calico(Map.Position(position_player));
+		}
+		
 	}
 	
 	
@@ -720,4 +821,26 @@ public class PlayState extends State{
 			Enemy = null;
 		}
 	}
+	
+	public void setBackpackbar() {
+		if(Calico.getSkill_available(5) == false) {
+			if(Calico.getSkill_available(3) == true) {
+				backpack_bar.setTexture(bp1_1);
+			} 
+			if(Calico.getSkill_available(4) == true) {
+				backpack_bar.setTexture(bp1_2);
+			}
+		}else if(Calico.getSkill_available(5) == true) {
+			if(Calico.getSkill_available(5) == true) {
+				backpack_bar.setTexture(bp2_1);
+			}
+			if(Calico.getSkill_available(3) == true) {
+				backpack_bar.setTexture(bp2_2);
+			} 
+			if(Calico.getSkill_available(4) == true) {
+				backpack_bar.setTexture(bp2_3);
+			}
+		}
+	}
+	
 }
